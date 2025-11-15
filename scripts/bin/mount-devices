@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+# Dependency check for install packages
+check_deps() {
+    deps=('gum' 'jq' 'lsblk' 'sed' 'udiskctl' 'doas')
+    if ! command -v "${deps[@]}" >/dev/null 2>&1; then
+        printf '%s' "Error: "${deps[@]}" is not installed. Install "${deps[@]}"."
+        exit 1
+    fi
+}
+
+# Gum functions
+gum_error() {
+    echo
+    gum log --structured --level error "$1"
+    echo
+    gum_done
+}
+
+# Wait for user to close the window
+gum_done() {
+    echo
+    gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+    exit 1
+}
+
+select_disk() {
+    # List all devices connected & grab them from a menu
+    # then printout the full path
+    disk=$(
+        lsblk -dpno NAME,MODEL,SIZE |
+            grep -E '/dev/(sd|mmcblk|hd|vd|xv)' |
+            gum choose --header "Choose a disk: "
+        )
+
+  if [ -z "$disk" ]; then
+      gum_error "No external disk connected or no disks selected."
+      exit 1
+  elif [ -n "$disk" ]; then
+      selected_disk=$(printf '%s' "$disk" | awk -F' ' '{print $1}')
+  fi
+}
+
+# Select partition
+select_partition() {
+    # List all partitions on the selected disk
+    # then printout the full path
+    partition=$(
+        lsblk -J "$selected_disk" |
+            jq -r '.blockdevices[].children[]? | select(.type == "part" and .mountpoints == []) | "\(.name) \(.size)"' |
+            gum choose --header "Choose a partition: "
+        )
+
+        if [ -z "$partition" ]; then
+            gum_error "Either no partitions found on the selected disk mounted or didn't select a partition."
+            exit 1
+        elif [ -n "$partition" ]; then
+            selected_partition=$(printf '%s' "$partition" | awk -F' ' '{print $1}')
+        fi
+    }
+
+# Unmounting partition
+unmount_partition() {
+    unmount_partition=$(lsblk -J |
+        jq -r '.blockdevices[].children[]? | select(.type == "part") | "\(.name) \(.mountpoints[0] // "")"' |
+        sed 's/[\[\]"]//g' |
+        grep -E '(sd|mmblck|hd|vd|xv)' |
+        gum choose --header "Choose a partition to unmount: ")
+    if [ -z "$unmount_partition" ]; then
+        gum_error "Either no partitions found or didn't select a partition."
+        exit 1
+    elif [ -n "$unmount_partition" ]; then
+        unmount_partition_name=$(printf '%s' "$unmount_partition" | awk -F' ' '{print $1}')
+    fi
+}
+
+# Mounting partition
+mount_disk_partition() {
+
+  # Select disk and partition
+  select_disk
+  select_partition
+  # Mount partition
+  udisksctl mount -b /dev/"$selected_partition"
+  gum_done
+}
+
+# Unmounting partition
+unmount_disk_partition() {
+
+  # Select disk and partition
+  unmount_partition
+
+  udisksctl unmount -b /dev/"$unmount_partition_name"
+  gum_done
+}
+
+case "$1" in
+    Mount)
+        mount_disk_partition
+        ;;
+    Unmount)
+        unmount_disk_partition
+        ;;
+esac

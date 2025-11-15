@@ -1,0 +1,132 @@
+@import '../../.cache/wal/colors-waybar.css';
+
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: 'JetBrainsMono Nerd Font Propo';
+  font-size: 12px;
+  font-weight: bold
+}
+
+window#waybar {
+  background-color: alpha(@background, 0.689);
+  color: @foreground;
+  border-bottom: none;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+label#window {
+  text-shadow: 0px 0px 3px #18181e;
+}
+
+/* Workspace */
+#workspaces button {
+  box-shadow: none;
+  min-width: 22px;
+}
+
+#workspaces button.active {
+  opacity: 1;
+  color: @foreground;
+}
+
+#workspaces button.empty {
+  opacity: 0.1;
+}
+ #workspaces button.empty.active {
+   opacity: 0.654;
+ }
+
+#workspaces button:not(.empty):not(.active) {
+  opacity: 0.48;
+}
+
+#workspaces button.urgent {
+  color: #FF0000;
+  border: 0px solid #333;
+  box-shadow: none;
+}
+
+#expand-tray {
+  margin: 0 32px;
+}
+
+#tray {
+  margin-left: 16px;
+}
+
+#custom-screenrecording-indicator {
+  color: #FF0000;
+  animation-name: urgent-blink;
+  animation-duration: 1s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#network {
+  min-width: 32px;
+  margin: 0 16px;
+}
+
+#network.disconnected {
+  color: #E61919;
+  opacity: 0.80;
+}
+
+#memory,
+#temperature {
+  margin: 0 12px;
+}
+
+#backlight {
+  margin-left: 24px;
+}
+
+#bluetooth {
+  min-width: 32px;
+}
+
+#battery {
+  margin-right: 32px;
+}
+
+/* keyframes for animation */
+@keyframes urgent-blink {
+  0% { color: #eb4d4b; }
+  50% { color: #ffffff; }
+  100% { color: #eb4d4b; }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+  color: #ffffff;
+  animation-name: urgent-blink;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.warning:not(.charging) {
+  color: #FFA500
+}
+
+#clock {
+  margin-right: 12px;
+}
+
+/* Groups */
+#hardware {
+  margin-right: 28px;
+}
+
+#audio {
+  margin-right: 32px;
+}

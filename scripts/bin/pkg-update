@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo -e "\e[32m\nUpdate system packages\e[0m"
+doas pacman -Syu --noconfirm
+
+# Update AUR packages if any are installed
+if pacman -Qem >/dev/null; then
+  echo -e "\e[32m\nUpdate AUR packages\e[0m"
+  yay -Sua --noconfirm
+  echo
+else
+  echo -e "\e[31m\nAUR is unavailable (so skipping updates)\e[0m"
+  echo
+fi
+
+orphans=$(pacman -Qtdq || true)
+if [[ -n $orphans ]]; then
+  echo -e "\e[32m\nRemove orphan system packages\e[0m"
+  for pkg in $orphans; do
+    doas pacman -Rns --noconfirm "$pkg" || true
+  done
+  echo
+fi
+
+gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'

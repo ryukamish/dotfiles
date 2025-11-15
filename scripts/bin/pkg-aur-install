@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+fzf_args=(
+  --multi
+  --preview 'yay -Siia {1}'
+  --preview-label-pos='bottom'
+  --preview-window 'down:65%:wrap'
+  --color 'pointer:green,marker:green'
+)
+
+pkg_names=$(yay -Slqa | fzf "${fzf_args[@]}")
+
+if [[ -n "$pkg_names" ]]; then
+  # Convert newline-separated selections to space-separated for yay
+  echo "$pkg_names" | tr '\n' ' ' | xargs yay -S --noconfirm
+  echo
+  gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+fi

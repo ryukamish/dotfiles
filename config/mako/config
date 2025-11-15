@@ -1,0 +1,19 @@
+include=~/.cache/wal/colors-mako
+
+# Global settings
+font=JetBrainsMono Nerd Font 11
+width=350
+margin=10
+padding=10
+border-size=2
+border-radius=5
+default-timeout=5000
+ignore-timeout=0
+max-visible=3
+layer=overlay
+anchor=top-right
+
+# Styling for urgent notifications
+[urgency=high]
+border-color=#ff0000
+default-timeout=50000

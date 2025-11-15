@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+RED="\e[31m" GREEN="\e[32m" RESET="\e[0m"
+
+history_file="$HOME/.bash_history"
+
+gum_done() {
+    gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+}
+
+gum_error() {
+    gum log --structured --level error "$1"
+}
+
+if [ -n "$history_file" ]; then
+    if [ ! "$(command -v fzf >/dev/null)" ]; then
+        cmd=$(cat "$history_file" | fzf --layout=reverse --height=50% --border)
+        wl-copy "$cmd"
+        gum_done
+    else
+        gum_error "fzf is not installed. Install fzf."
+        gum_done
+    fi
+elif [[ -z "$history_file" ]]; then
+    gum_error "History file doesn't exist."
+    gum_done
+fi

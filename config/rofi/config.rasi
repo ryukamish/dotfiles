@@ -1,0 +1,59 @@
+@import '~/.cache/wal/colors-rofi-light.rasi'
+
+* {
+    font: 'JetBrainsMono Nerd Font 13';
+}
+
+window {
+    transparency: "real";
+    width: 24em;
+    border: 2px;
+    border-color: @foreground;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+configuration {
+    modi: "drun,run,recursivebrowser,emoji";
+    show-icons: true;
+    display-drun: " ";
+    case-sensitive: false;
+}
+
+listview {
+    columns: 1;
+    lines: 7;
+    fixed-height: true;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: false;
+    border: 0px solid;
+}
+
+entry {
+    placeholder: "";
+}
+
+inputbar {
+    children: ["prompt", "entry"];
+    spacing: 10px;
+}
+
+mainbox {
+    spacing: 8px;
+    margin: 8px;
+    padding: 8px;
+    children: ["inputbar", "listview", "message"];
+}
+
+element {
+    spacing: 8px;
+    margin: 4px;
+    padding: 4px;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+element-text.selected {
+    text-color: @background;
+}

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+tui_name=$(gum input --placeholder "TUI name..." --header "Name: " --header.bold --header.foreground="#FCB8EF")
+tui_exec=$(gum input --placeholder "Exec command..." --header "Command: " --header.bold --header.foreground="#FCB8EF")
+window_style=$(gum choose --header.bold --header.foreground="#FCB8EF" --header "Choose a window style: " "float" "tile")
+icon_url=$(gum input --placeholder "Icon URL..." --header "TUI icon: " --header.bold --header.foreground="#FCB8EF")
+
+icon_dir="$HOME/.local/share/applications/icons"
+desktop_file="$HOME/.local/share/applications/$tui_name.desktop"
+
+if [ ! -d "$icon_dir" ]; then
+    mkdir "$icon_dir"
+fi
+
+# Download icon
+if [[ "$icon_url" =~ ^https?:// ]]; then
+    curl -sL -o "$icon_dir/$tui_name.png" "$icon_url"
+else
+    cp "$icon_url" "$icon_dir/$tui_name.png"
+fi
+
+# Select window style
+if [[ "$window_style" == "float" ]]; then
+    app_class="TUI.float"
+elif [[ "$window_style" == "tile" ]]; then
+    app_class="TUI.tile"
+fi
+
+# Desktop file
+if [ -f "$desktop_file" ]; then
+    echo
+    gum log --structured --level error "Desktop file already exists."
+    echo
+    gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+    exit 1
+else
+    cat <<EOF >"$desktop_file"
+[Desktop Entry]
+Version=1.0
+Name=$tui_name
+Comment=$tui_name
+Exec=kitty --class=$app_class -e $tui_exec
+Icon=$icon_dir/$tui_name.png
+Terminal=false
+Type=Application
+StartupNotify=true
+EOF
+fi
+
+update-desktop-database "$HOME/.local/share/applications"
+
+# Wait for user input
+gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'

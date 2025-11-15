@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Directory where your wallpapers are stored
+wallpaperLightDir="$HOME/.local/share/backgrounds/light"
+wallpaperDarkDir="$HOME/.local/share/backgrounds/dark"
+
+# Get a random wallpaper
+wallpaperLight=$(find "$wallpaperLightDir" -type f -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | shuf -n 1)
+wallpaperDark=$(find "$wallpaperDarkDir" -type f -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | shuf -n 1)
+
+case "$1" in
+*Light)
+  if [ -z "$wallpaperLight" ]; then
+    notify-send "ERROR" "Light background directory doesn't exist."
+    exit 1
+  elif [ -n "$wallpaperLight" ]; then
+    # Generate pywal colors
+    wal -i "$wallpaperLight" -n -l --contrast 1.5
+    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
+    # Check for rofi config file and change it from dark to light
+    if [ -f "$HOME/.config/rofi/config.rasi" ]; then
+      sed -i 's/colors-rofi-dark/colors-rofi-light/' "$HOME/.config/rofi/config.rasi"
+    fi
+    swwwOpts="--transition-type wave --transition-step 100 --transition-fps 60 --transition-duration 0.8"
+    swww img "$wallpaperLight" $swwwOpts
+    # Restart swayosd-server for notification
+    restart-app swayosd-server
+  fi
+  ;;
+*Dark)
+  if [ -z "$wallpaperDark" ]; then
+    notify-send "ERROR" "Dark background directory doesn't exist."
+    exit 1
+  elif [ -n "$wallpaperDark" ]; then
+    # Generate pywal colors
+    wal -i "$wallpaperDark" -n --contrast 1.5
+    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+    # Check for rofi config file and change it from dark to light
+    if [ -f "$HOME/.config/rofi/config.rasi" ]; then
+      sed -i 's/colors-rofi-light/colors-rofi-dark/' "$HOME/.config/rofi/config.rasi"
+    fi
+    swwwOpts="--transition-type wave --transition-step 100 --transition-fps 60 --transition-duration 0.8"
+    swww img "$wallpaperDark" $swwwOpts
+    # Restart swayosd-server for notification
+    restart-app swayosd-server
+  fi
+  ;;
+esac

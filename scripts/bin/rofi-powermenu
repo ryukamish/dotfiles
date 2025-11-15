@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+power_args=$(printf '%b' ' Lock\n Restart\n󰒲 Suspend\n󰋊 Hibernate\n󰚦 Shutdown' |
+    rofi -dmenu -p "󰐥 " -i -theme-str 'window {width: 12em; padding: 2px; height: 14em;}')
+
+case "$power_args" in
+    *Lock)
+        loginctl lock-session
+        ;;
+    *Restart)
+        systemctl reboot
+        ;;
+    *Suspend)
+        systemctl suspend
+        ;;
+    *Hibernate)
+        systemctl hibernate
+        ;;
+    *Shutdown)
+        systemctl poweroff
+        ;;
+esac

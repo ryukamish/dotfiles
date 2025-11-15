@@ -1,0 +1,25 @@
+export PATH="${PATH}:$HOME/.local/bin"
+
+# XDG Directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# History
+HISTCONTROL=ignoreboth
+HISTSIZE=10000
+HISTFILESIZE=10000
+
+shopt -s histappend
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# Tab completion for doas when bash-completion
+# is not installed.
+complete -cf doas
+
+# Tab completion when bash-completion is installed
+complete -F _command doas
+
+if command -v starship >/dev/null; then
+  eval "$(starship init bash)"
+fi

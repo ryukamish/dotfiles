@@ -1,0 +1,39 @@
+@import '../../.cache/wal/colors-waybar.css';
+
+window#osd {
+  border-radius: 10px;
+  border: 2px solid @foreground;
+  background: @background;
+}
+
+label {
+	font-size: 12pt;
+}
+
+window#osd image {
+  -gtk-icon-transform: scale(0.7);
+}
+
+window#osd image,
+window#osd label {
+  color: @foreground;
+}
+
+window#osd progressbar:disabled,
+window#osd image:disabled {
+  opacity: 0.5;
+}
+
+window#osd progressbar {
+  border: none;
+}
+
+window#osd trough {
+  border: none;
+  background: alpha(@color1, 0.5);
+}
+
+window#osd progress {
+  border: none;
+  background: @foreground;
+}

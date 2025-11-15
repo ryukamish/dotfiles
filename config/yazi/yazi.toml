@@ -1,0 +1,4 @@
+[catalog]
+home = "~"
+sort = { type = "name", insensitive = true }
+
