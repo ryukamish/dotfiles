@@ -7,7 +7,11 @@ return {
     tag = "v0.1.9", -- tag version which gave a lot of errors when not checked with the github repo
 
     dependencies = {
-        "nvim-lua/plenary.nvim"
+        "nvim-lua/plenary.nvim",
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = 'make',
+        }
     },
     -- Configuration for telescope goes here
     config = function()
@@ -20,10 +24,88 @@ return {
             },
             pickers = {
                 find_files = {
-                    find_command = { "fd", "--type", "f", "--hidden", "--strip-cwd-prefix" },
+                    theme = 'ivy',
+                    find_command = {
+                        'fd',
+                        '--type', 'f',              -- Only files, not directories
+                        '--hidden',                 -- Include hidden files/dirs (e.g., ~/.config)
+                        '--follow',                 -- Follow symlinks
+                        '--exclude', '.git',        -- Skip .git directory
+                        -- Exclude meaningless directories
+                        '--exclude', '*.cache',
+                        '--exclude', '*.local/share/Trash',
+                        '--exclude', 'node_modules',
+                        '--exclude', 'vendor',
+                        '--exclude', 'dist',
+                        '--exclude', 'build',
+                        '--exclude', 'target',
+                        '--exclude', 'tmp',
+                        '--exclude', 'temp',
+                        -- Exclude video and media files
+                        '--exclude', '*.mp4',
+                        '--exclude', '*.mkv',
+                        '--exclude', '*.avi',
+                        '--exclude', '*.mov',
+                        '--exclude', '*.wmv',
+                        '--exclude', '*.flv',
+                        -- Exclude images
+                        '--exclude', '*.jpg',
+                        '--exclude', '*.jpeg',
+                        '--exclude', '*.png',
+                        '--exclude', '*.gif',
+                        -- Exclude binaries/archives
+                        '--exclude', '*.exe',
+                        '--exclude', '*.o',
+                        '--exclude', '*.a',
+                        '--exclude', '*.so',
+                        '--exclude', '*.zip',
+                        '--exclude', '*.tar.gz',
+                        '--exclude', '*.rar',
+                    },
+                    -- Search in home directory, including hidden dirs like .config
+                    cwd = vim.fn.expand('~'), -- Start search in $HOME
+                    hidden = true,            -- Ensure hidden files/dirs are included
+                    live_grep = {
+                        additional_args = function()
+                            return {
+                                '--hidden',                -- Include hidden files/dirs
+                                '--glob', '!.git/*',      -- Exclude .git
+                                -- Exclude video and media files
+                                '--glob', '!*.mp4',
+                                '--glob', '!*.mkv',
+                                '--glob', '!*.avi',
+                                '--glob', '!*.mov',
+                                -- Exclude images
+                                '--glob', '!*.jpg',
+                                '--glob', '!*.jpeg',
+                                '--glob', '!*.png',
+                                '--glob', '!*.gif',
+                                -- Exclude meaningless directories
+                                '--glob', '!*.cache/*',
+                                '--glob', '!*.local/share/Trash/*',
+                                '--glob', '!node_modules/*',
+                                '--glob', '!vendor/*',
+                                '--glob', '!dist/*',
+                                '--glob', '!build/*',
+                                '--glob', '!target/*',
+                                '--glob', '!tmp/*',
+                                '--glob', '!temp/*',
+                            }
+                        end,
+                        cwd = vim.fn.expand('~'), -- Start search in $HOME
+                        },
+                    },
                 },
-            },
-        })
+                extensions = {
+                    fzf = {
+                        fuzzy = true,                    -- Enable fuzzy search
+                        override_generic_sorter = true,  -- Override the generic sorter
+                        override_file_sorter = true,     -- Override the file sorter
+                        case_mode = "smart_case",        -- Smart case sensitivity
+                    },
+                },
+                require('telescope').load_extension('fzf')
+            })
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })

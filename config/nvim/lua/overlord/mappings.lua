@@ -41,3 +41,24 @@ vim.keymap.set("n", "<leader>bn", [[:tabnew<CR>]])  -- New tab
 vim.keymap.set("n", "<leader>bd", [[:tabclose<CR>]])  -- Close tab
 vim.keymap.set("n", "<leader>l", [[:+tabnext<CR>]])  -- Next tab
 vim.keymap.set("n", "<leader>h", [[:tabprevious<CR>]])  -- Previous tab
+
+vim.keymap.set("n", "<leader>bw", [[:se wrap!<CR>]])  -- Toggle line wrapping
+
+-- Terminal inside Neovim
+vim.keymap.set("n", "<leader>t", function ()
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0, 12)
+end)
+
+-- Exit terminal mode with ESC
+vim.keymap.set('t', '<ESC>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+vim.api.nvim_create_autocmd("TermOpen", {
+    group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
+    callback = function()
+        vim.opt.number = false
+        vim.opt.relativenumber= false
+    end,
+})
