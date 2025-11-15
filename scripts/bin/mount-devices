@@ -2,7 +2,7 @@
 
 # Dependency check for install packages
 check_deps() {
-    deps=('gum' 'jq' 'lsblk' 'sed' 'udiskctl' 'doas')
+    deps=('gum' 'jq' 'lsblk' 'sed' 'udiskctl')
     if ! command -v "${deps[@]}" >/dev/null 2>&1; then
         printf '%s' "Error: "${deps[@]}" is not installed. Install "${deps[@]}"."
         exit 1

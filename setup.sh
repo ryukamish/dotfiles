@@ -142,12 +142,5 @@ if [ -d "$HOME/.config/bash" ]; then
 fi
 EOF
 
-# If using doas, allow wheel group to use sudo
-# if [ -f '/etc/doas.conf' ]; then
-#   cat <<'EOF'
-# permit persist setenv {PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin} :wheel
-# EOF
-# fi
-
 # Make default XDG directories
-# xdg-user-dirs-update
+xdg-user-dirs-update
