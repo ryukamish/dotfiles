@@ -89,6 +89,9 @@ ufw allow 80/tcp
 ufw allow 443/tcp
 ufw default deny incoming
 ufw default allow outgoing
+# For ProtonVPN
+ufw allow in on proton0
+ufw allow out in proton0
 ```
 
 #### Network
