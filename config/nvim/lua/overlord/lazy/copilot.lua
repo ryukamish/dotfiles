@@ -19,7 +19,7 @@ return {
                 auto_trigger = true,
                 debounce = 75,
                 keymap = {
-                    accept = "<M-l>",
+                    accept = "<C-CR>",
                     accept_word = false,
                     accept_line = false,
                 },
@@ -34,7 +34,6 @@ return {
                 hgcommit = false,
                 svn = false,
                 cvs = false,
-                ["."] = false,
             },
         })
     end
