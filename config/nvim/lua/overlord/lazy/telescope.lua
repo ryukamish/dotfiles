@@ -28,7 +28,7 @@ return {
                     find_command = {
                         'fd',
                         '--type', 'f',              -- Only files, not directories
-                        '--hidden',                 -- Include hidden files/dirs (e.g., ~/.config)
+                        -- '--hidden',                 -- Include hidden files/dirs (e.g., ~/.config)
                         '--follow',                 -- Follow symlinks
                         '--exclude', '.git',        -- Skip .git directory
                         -- Exclude meaningless directories

@@ -7,7 +7,8 @@ return {
                 enabled = true,
                 auto_refresh = false,
                 keymap = {
-                    accept = "<CR>",
+                    accept = "<C-CR>",
+                    refresh = "gr",
                 },
             },
             layout = {
@@ -19,7 +20,7 @@ return {
                 auto_trigger = true,
                 debounce = 75,
                 keymap = {
-                    accept = "<C-CR>",
+                    accept = "<C-l>",
                     accept_word = false,
                     accept_line = false,
                 },
