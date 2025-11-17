@@ -38,10 +38,10 @@ case "$menu_args" in
         theme_args=$(printf '%b' ' Light\n Dark' | rofi -dmenu -p ' Mode: ' -i)
         case "$theme_args" in
             *Light)
-                hyprwall Light
+                hyprwall light
                 ;;
             *Dark)
-                hyprwall Dark
+                hyprwall dark
                 ;;
         esac
         ;;

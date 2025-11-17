@@ -1,50 +1,132 @@
 #!/usr/bin/env bash
 
-# Directory where your wallpapers are stored
-wallpaperLightDir="$HOME/.local/share/backgrounds/light"
-wallpaperDarkDir="$HOME/.local/share/backgrounds/dark"
+CACHEDIR="$HOME/.cache/hyprwall"
+WALLDIR="$HOME/.local/share/backgrounds"
 
-# Get a random wallpaper
-wallpaperLight=$(find "$wallpaperLightDir" -type f -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | shuf -n 1)
-wallpaperDark=$(find "$wallpaperDarkDir" -type f -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | shuf -n 1)
+# Check if light or dark argument is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 [light|dark]"
+    exit 1
+fi
 
-case "$1" in
-    *Light)
-        if [ -z "$wallpaperLight" ]; then
-            notify-send "ERROR" "Light background directory doesn't exist."
-            exit 1
-        elif [ -n "$wallpaperLight" ]; then
-            # Generate pywal colors
-            wal -i "$wallpaperLight" -l --contrast 1.5
+MODE="$1"
+
+# Validate mode
+if [ "$MODE" != "light" ] && [ "$MODE" != "dark" ]; then
+    echo "Error: Invalid mode. Use 'light' or 'dark'"
+    exit 1
+fi
+
+# Check if wallpaper directory exists
+if [ ! -d "$WALLDIR/$MODE" ]; then
+    notify-send -u low "Wallpaper directory does not exist. Creating it now."
+    mkdir -p "$WALLDIR/$MODE"
+    exit 1
+fi
+
+# Check if directory has wallpapers
+if [ ! "$(ls -A "$WALLDIR/$MODE")" ]; then
+    notify-send -u normal "Wallpapers directory is empty. Please add some wallpapers to $WALLDIR/$MODE."
+    exit 1
+fi
+
+# Create cache directory if it doesn't exist
+if [ ! -d "$CACHEDIR" ]; then
+    mkdir -p "$CACHEDIR"
+fi
+
+# Find all wallpapers in the selected mode directory and store in array
+mapfile -t wallpapers_array < <(find "${WALLDIR}/${MODE}" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.webp" \) | sort)
+
+# Check if wallpapers were found
+if [ ${#wallpapers_array[@]} -eq 0 ]; then
+    notify-send -u normal "No wallpapers found in $WALLDIR/$MODE"
+    exit 1
+fi
+
+# Generate thumbnails and create rofi menu entries with index
+index=0
+for wallpaper in "${wallpapers_array[@]}"; do
+    basename_wall=$(basename "$wallpaper")
+    thumbnail="$CACHEDIR/${MODE}_${basename_wall}"
+
+    # Generate thumbnail if it doesn't exist or source is newer
+    if [ ! -f "$thumbnail" ] || [ "$wallpaper" -nt "$thumbnail" ]; then
+        magick convert "$wallpaper" -resize 400x400^ -gravity center -extent 400x400 "$thumbnail" 2>/dev/null
+    fi
+
+    # Use index as identifier
+    echo -e "${index}\0icon\x1f${thumbnail}"
+    index=$((index + 1))
+done > /tmp/rofi_wallpaper_menu.txt
+
+# Display rofi menu with large thumbnails and no text
+selected_index=$(cat /tmp/rofi_wallpaper_menu.txt | \
+    rofi -dmenu -i \
+    -theme-str 'window {width: 85%; height: 85%; anchor: center; location: center;}' \
+    -theme-str 'listview {columns: 3; lines: 2; scrollbar: true;}' \
+    -theme-str 'element {orientation: vertical; padding: 5px;}' \
+    -theme-str 'element-icon {size: 300px;}' \
+    -theme-str 'element-text {enabled: false;}' \
+    -theme-str 'inputbar {enabled: false;}' \
+    -theme-str 'mainbox {padding: 10px;}' \
+    -p "Select $MODE wallpaper" | cut -d' ' -f1)
+
+# Check if a selection was made
+if [ -n "$selected_index" ]; then
+    # Get the actual wallpaper path using the index
+    selected_wallpaper="${wallpapers_array[$selected_index]}"
+
+    if [ -n "$selected_wallpaper" ] && [ -f "$selected_wallpaper" ]; then
+        echo "Selected: $selected_wallpaper"
+
+        # Apply pywal with appropriate mode
+        if [ "$MODE" = "light" ]; then
+            # Generate light colorscheme
+            wal -i "$selected_wallpaper" -l --contrast 1.5
             gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"
             gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
-            # Check for rofi config file and change it from dark to light
             if [ -f "$HOME/.config/rofi/config.rasi" ]; then
                 sed -i 's/colors-rofi-dark/colors-rofi-light/' "$HOME/.config/rofi/config.rasi"
             fi
-            swwwOpts="--transition-type wave --transition-step 100 --transition-fps 60 --transition-duration 0.8"
-            swww img "$wallpaperLight" $swwwOpts
-            # Restart swayosd-server for notification
-            restart-app swayosd-server
-        fi
-        ;;
-    *Dark)
-        if [ -z "$wallpaperDark" ]; then
-            notify-send "ERROR" "Dark background directory doesn't exist."
-            exit 1
-        elif [ -n "$wallpaperDark" ]; then
-            # Generate pywal colors
-            wal -i "$wallpaperDark" --contrast 1.5
+        else
+            # Generate dark colorscheme
+            wal -i "$selected_wallpaper" --contrast 1.5
             gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
             gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
             # Check for rofi config file and change it from dark to light
             if [ -f "$HOME/.config/rofi/config.rasi" ]; then
                 sed -i 's/colors-rofi-light/colors-rofi-dark/' "$HOME/.config/rofi/config.rasi"
             fi
-            swwwOpts="--transition-type wave --transition-step 100 --transition-fps 60 --transition-duration 0.8"
-            swww img "$wallpaperDark" $swwwOpts
-            # Restart swayosd-server for notification
-            restart-app swayosd-server
         fi
-        ;;
-esac
+
+        # Set wallpaper with your preferred tool
+        # Uncomment the one you use:
+
+        # For swww:
+        swww img "$selected_wallpaper" --transition-type wave --transition-fps 60 --transition-duration 0.8
+
+        # For hyprpaper:
+        # hyprctl hyprpaper preload "$selected_wallpaper"
+        # hyprctl hyprpaper wallpaper ",$selected_wallpaper"
+
+        # For swaybg:
+        # killall swaybg
+        # swaybg -i "$selected_wallpaper" &
+
+        # For feh:
+        # feh --bg-fill "$selected_wallpaper"
+        restart-app swayosd-server
+
+        notify-send -u normal "Wallpaper changed" "Applied $MODE theme with pywal"
+    else
+        echo "Error: Could not find selected wallpaper"
+        exit 1
+    fi
+else
+    echo "No selection made"
+    exit 0
+fi
+
+# Clean up temp file
+rm -f /tmp/rofi_wallpaper_menu.txt
