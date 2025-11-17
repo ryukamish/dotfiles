@@ -1,6 +1,6 @@
 return {
     "zbirenbaum/copilot.lua",
-    config = function ()
+    config = function()
         require("copilot").setup({
             -- Disabling the panel for reducing lag
             panel = {
@@ -10,10 +10,6 @@ return {
                     accept = "<C-CR>",
                     refresh = "gr",
                 },
-            },
-            layout = {
-                position = "bottom", -- | top | left | right | bottom |
-                ratio = 0.4
             },
             suggestion = {
                 enabled = true,
@@ -35,6 +31,7 @@ return {
                 hgcommit = false,
                 svn = false,
                 cvs = false,
+                ["."] = false,
             },
         })
     end

@@ -5,7 +5,8 @@ return {
         dependencies = {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
-            "saghen/blink.cmp"
+            "saghen/blink.cmp",
+            "b0o/schemastore.nvim",
         },
         config = function()
             require("mason").setup()
@@ -127,42 +128,20 @@ return {
             vim.lsp.enable("marksman")
         end,
     },
-
-    -- JSON schemas for better JSON support
+    -- Blink.cmp - modern completion plugin
     {
-        "b0o/schemastore.nvim",
-        lazy = true,
-    },
-
-    -- Completion
-    {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-            "hrsh7th/cmp-buffer", -- Buffer completion
-            "hrsh7th/cmp-path",   -- Path completion
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
+        lazy = false,
+        version = 'v0.*',
+        opts = {
+            keymap = { preset = 'default' },
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = 'mono'
+            },
+            sources = {
+                default = { 'lsp', 'path', 'buffer' },
+            },
         },
-        config = function()
-            local cmp = require("cmp")
-            cmp.setup {
-                mapping = cmp.mapping.preset.insert {
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm { select = true },
-                },
-                sources = cmp.config.sources({
-                    -- Copilot Source
-                    { name = "copilot", group_index = 2 },
-                    -- Other sources
-                    { name = "nvim_lsp", group_index = 2 },
-                    { name = "buffer", group_index = 2 },
-                    { name = "path", group_index = 2  },
-                }),
-            }
-        end,
     },
-
 }
