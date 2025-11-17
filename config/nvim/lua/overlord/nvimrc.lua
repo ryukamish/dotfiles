@@ -16,9 +16,12 @@ vim.opt.showbreak = "↪ "
 
 vim.opt.swapfile = false
 vim.opt.backup = false
+
 -- Undotree plugin options
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
+
+vim.o.winborder = "rounded"
 
 -- True colors
 vim.opt.termguicolors = true
@@ -27,7 +30,3 @@ vim.opt.termguicolors = true
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
-
--- Transparent bottom bar
-vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE" })

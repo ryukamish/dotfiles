@@ -13,6 +13,10 @@ max-visible=3
 layer=overlay
 anchor=top-right
 
+[urgency=normal]
+border-color=#FFA500
+default-timeout=10000
+
 # Styling for urgent notifications
 [urgency=high]
 border-color=#ff0000
