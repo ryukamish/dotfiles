@@ -1,37 +1,123 @@
 #!/usr/bin/env bash
 
-ICON_DIR="$HOME/.local/share/applications/icons"
-DESKTOP_DIR="$HOME/.local/share/applications/"
+set -euo pipefail
 
-# Find all TUIs
+# Colors
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+BOLD='\e[1m'
+RESET='\e[0m'
+
+# Trap to ensure window stays open on exit
+pause_at_exit() {
+    echo
+    if command -v gum >/dev/null 2>&1; then
+        gum style --border rounded --padding "0 1" --foreground 212 "Done! Press any key to close..."
+        read -n 1 -s -r
+    else
+        echo -e "${BLUE}Press any key to close...${RESET}"
+        read -n 1 -s -r
+    fi
+}
+
+trap pause_at_exit EXIT
+
+# Directories
+ICON_DIR="$HOME/.local/share/applications/icons"
+DESKTOP_DIR="$HOME/.local/share/applications"
+
+# Check required tools
+if ! command -v gum >/dev/null 2>&1; then
+    echo -e "${RED}Error: gum is not installed${RESET}"
+    exit 1
+fi
+
+echo -e "${BLUE}${BOLD}TUI Application Remover${RESET}\n"
+
+# Find all TUI desktop files
+declare -a TUIS=()
+
 while IFS= read -r -d '' file; do
-    if grep -q '^Exec=.*kitty.*-e' "$file"; then
+    if grep -q '^Exec=.*\(kitty\|alacritty\).*-e' "$file" 2>/dev/null; then
         TUIS+=("$(basename "${file%.desktop}")")
     fi
-done < <(find "$DESKTOP_DIR" -name '*.desktop' -print0)
+done < <(find "$DESKTOP_DIR" -maxdepth 1 -name '*.desktop' -print0 2>/dev/null)
 
-if ((${#TUIS[@]})); then
-    IFS=$'\n' SORTED_TUIS=($(sort <<<"${TUIS[*]}"))
-    unset IFS
-    APP_NAMES_STRING=$(gum choose --no-limit --header "Select TUI to remove..." --selected-prefix="✗ " "${SORTED_TUIS[@]}")
-    # Convert newline-separated string to array
-    APP_NAMES=()
-    while IFS= read -r line; do
-        [[ -n "$line" ]] && APP_NAMES+=("$line")
-    done <<<"$APP_NAMES_STRING"
-else
-    echo "No TUIs to remove."
-    exit 1
+# Check if any TUIs found
+if [[ ${#TUIS[@]} -eq 0 ]]; then
+    echo -e "${YELLOW}No TUI applications found.${RESET}"
+    exit 0
 fi
 
-if [[ ${#APP_NAMES[@]} -eq 0 ]]; then
-    echo "You must provide TUI names."
-    exit 1
+# Sort TUIs
+IFS=$'\n' SORTED_TUIS=($(sort <<<"${TUIS[*]}"))
+unset IFS
+
+# Let user select TUIs to remove
+echo -e "${YELLOW}Found ${#SORTED_TUIS[@]} TUI application(s)${RESET}\n"
+
+app_names_string=$(gum choose --no-limit --header "Select TUI(s) to remove:" --selected-prefix="✗ " "${SORTED_TUIS[@]}" || true)
+
+# Convert to array
+declare -a app_names=()
+while IFS= read -r line; do
+    [[ -n "$line" ]] && app_names+=("$line")
+done <<<"$app_names_string"
+
+# Check if user selected anything
+if [[ ${#app_names[@]} -eq 0 ]]; then
+    echo -e "${YELLOW}No applications selected. Exiting.${RESET}"
+    exit 0
 fi
 
-for APP_NAME in "${APP_NAMES[@]}"; do
-    rm -f "$DESKTOP_DIR/$APP_NAME.desktop"
-    rm -f "$ICON_DIR/$APP_NAME.png"
-    echo "Removed $APP_NAME"
-    gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+# Show what will be removed
+echo
+echo -e "${RED}${BOLD}⚠ The following TUI applications will be REMOVED:${RESET}"
+for name in "${app_names[@]}"; do
+    echo -e "  ${RED}✗${RESET} $name"
 done
+echo
+
+# Remove selected TUIs
+removed_count=0
+failed_count=0
+
+for app_name in "${app_names[@]}"; do
+    desktop_file="$DESKTOP_DIR/$app_name.desktop"
+    icon_file="$ICON_DIR/$app_name.png"
+
+    success=true
+
+    # Remove desktop file
+    if [[ -f "$desktop_file" ]]; then
+        rm -f "$desktop_file" || success=false
+    fi
+
+    # Remove icon file
+    if [[ -f "$icon_file" ]]; then
+        rm -f "$icon_file" || success=false
+    fi
+
+    if $success; then
+        echo -e "${GREEN}✓${RESET} Removed $app_name"
+        ((removed_count++))
+    else
+        echo -e "${RED}✗${RESET} Failed to remove $app_name"
+        ((failed_count++))
+    fi
+done
+
+# Update desktop database
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
+fi
+
+# Summary
+echo
+echo -e "${GREEN}${BOLD}✓ Removed $removed_count application(s)${RESET}"
+[[ $failed_count -gt 0 ]] && echo -e "${RED}${BOLD}✗ Failed to remove $failed_count application(s)${RESET}"
+echo
+
+# Window will stay open due to EXIT trap

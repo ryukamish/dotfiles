@@ -1,53 +1,261 @@
 #!/usr/bin/env bash
 
-tui_name=$(gum input --placeholder "TUI name..." --header "Name: " --header.bold --header.foreground="#FCB8EF")
-tui_exec=$(gum input --placeholder "Exec command..." --header "Command: " --header.bold --header.foreground="#FCB8EF")
-window_style=$(gum choose --header.bold --header.foreground="#FCB8EF" --header "Choose a window style: " "float" "tile")
-icon_url=$(gum input --placeholder "Icon URL..." --header "TUI icon: " --header.bold --header.foreground="#FCB8EF")
+set -uo pipefail
 
-icon_dir="$HOME/.local/share/applications/icons"
-desktop_file="$HOME/.local/share/applications/$tui_name.desktop"
+# Colors
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+MAGENTA='\e[35m'
+BOLD='\e[1m'
+RESET='\e[0m'
 
-if [ ! -d "$icon_dir" ]; then
-    mkdir "$icon_dir"
-fi
+# Directories
+ICON_DIR="$HOME/.local/share/applications/icons"
+DESKTOP_DIR="$HOME/.local/share/applications"
 
-# Download icon
-if [[ "$icon_url" =~ ^https?:// ]]; then
-    curl -sL -o "$icon_dir/$tui_name.png" "$icon_url"
+# Check if gum is available
+HAS_GUM=false
+command -v gum >/dev/null 2>&1 && HAS_GUM=true
+
+# Utility functions for input (with/without gum)
+get_input() {
+    local prompt="$1"
+    local placeholder="${2:-}"
+    local result=""
+
+    if $HAS_GUM; then
+        result=$(gum input --placeholder "$placeholder" --header "$prompt" --header.bold --header.foreground="#FCB8EF" || true)
+    else
+        echo -e "${MAGENTA}${BOLD}$prompt${RESET}"
+        [[ -n "$placeholder" ]] && echo -e "${BLUE}($placeholder)${RESET}"
+        read -r -p "> " result
+    fi
+
+    echo "$result"
+}
+
+choose_option() {
+    local prompt="$1"
+    shift
+    local options=("$@")
+    local result=""
+
+    if $HAS_GUM; then
+        result=$(gum choose --header.bold --header.foreground="#FCB8EF" --header "$prompt" "${options[@]}" || true)
+    else
+        echo -e "${MAGENTA}${BOLD}$prompt${RESET}"
+        select opt in "${options[@]}"; do
+            if [[ -n "$opt" ]]; then
+                result="$opt"
+                break
+            fi
+        done < /dev/tty
+    fi
+
+    echo "$result"
+}
+
+confirm() {
+    local prompt="$1"
+
+    if $HAS_GUM; then
+        gum confirm "$prompt"
+    else
+        echo -e "${YELLOW}$prompt${RESET}"
+        read -r -p "(y/N) > " response < /dev/tty
+        [[ "$response" =~ ^[Yy]$ ]]
+    fi
+}
+
+log_error() {
+    if $HAS_GUM; then
+        gum log --structured --level error "$1"
+    else
+        echo -e "${RED}${BOLD}✗ ERROR:${RESET} $1"
+    fi
+}
+
+log_warn() {
+    if $HAS_GUM; then
+        gum log --structured --level warn "$1"
+    else
+        echo -e "${YELLOW}${BOLD}⚠ WARNING:${RESET} $1"
+    fi
+}
+
+log_info() {
+    if $HAS_GUM; then
+        gum log --structured --level info "$1"
+    else
+        echo -e "${GREEN}${BOLD}ℹ INFO:${RESET} $1"
+    fi
+}
+
+pause_and_wait() {
+    echo
+    if $HAS_GUM; then
+        gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s -r < /dev/tty'
+    else
+        echo -e "${BLUE}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        echo -e "${GREEN}Press any key to close this window...${RESET}"
+        echo -e "${BLUE}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+        read -n 1 -s -r < /dev/tty
+    fi
+}
+
+# Trap to ensure window stays open
+trap pause_and_wait EXIT
+
+# Detect terminal emulator
+if command -v kitty >/dev/null 2>&1; then
+    TERMINAL="kitty"
+elif command -v alacritty >/dev/null 2>&1; then
+    TERMINAL="alacritty"
+elif [[ -n "${TERMINAL:-}" ]]; then
+    TERMINAL="$TERMINAL"
 else
-    cp "$icon_url" "$icon_dir/$tui_name.png"
-fi
-
-# Select window style
-if [[ "$window_style" == "float" ]]; then
-    app_class="TUI.float"
-elif [[ "$window_style" == "tile" ]]; then
-    app_class="TUI.tile"
-fi
-
-# Desktop file
-if [ -f "$desktop_file" ]; then
-    echo
-    gum log --structured --level error "Desktop file already exists."
-    echo
-    gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+    log_error "No supported terminal emulator found (kitty/alacritty)"
+    echo -e "${RED}Please install kitty or alacritty to continue.${RESET}"
     exit 1
-else
-    cat <<EOF >"$desktop_file"
+fi
+
+echo -e "${BLUE}${BOLD}TUI Application Installer${RESET}\n"
+$HAS_GUM || echo -e "${YELLOW}Note: Running without gum (basic mode)${RESET}\n"
+
+# Get TUI name
+tui_name=$(get_input "Name:" "TUI name...")
+if [[ -z "$tui_name" ]]; then
+    log_error "TUI name cannot be empty"
+    echo -e "${RED}Operation cancelled.${RESET}"
+    exit 1
+fi
+
+# Check if desktop file already exists
+desktop_file="$DESKTOP_DIR/$tui_name.desktop"
+if [[ -f "$desktop_file" ]]; then
+    log_error "Desktop file '$tui_name.desktop' already exists"
+    echo -e "${YELLOW}To update, delete it first: rm '$desktop_file'${RESET}"
+    exit 1
+fi
+
+# Get exec command
+tui_exec=$(get_input "Command:" "Exec command...")
+if [[ -z "$tui_exec" ]]; then
+    log_error "Exec command cannot be empty"
+    echo -e "${RED}Operation cancelled.${RESET}"
+    exit 1
+fi
+
+# Verify command exists
+cmd_binary=$(echo "$tui_exec" | awk '{print $1}')
+if ! command -v "$cmd_binary" >/dev/null 2>&1; then
+    log_warn "Command '$cmd_binary' not found in PATH"
+    if ! confirm "Continue anyway?"; then
+        exit 1
+    fi
+fi
+
+# Get window style
+window_style=$(choose_option "Choose a window style:" "float" "tile")
+if [[ -z "$window_style" ]]; then
+    log_error "Window style not selected"
+    echo -e "${RED}Operation cancelled.${RESET}"
+    exit 1
+fi
+
+# Set app class based on style
+case "$window_style" in
+    float)
+        app_class="TUI.float"
+        ;;
+    tile)
+        app_class="TUI.tile"
+        ;;
+    *)
+        log_error "Invalid window style: $window_style"
+        exit 1
+        ;;
+esac
+
+# Get icon URL/path
+icon_url=$(get_input "TUI icon (optional):" "Icon URL or path...")
+
+# Create icon directory if needed
+if [[ ! -d "$ICON_DIR" ]]; then
+    if ! mkdir -p "$ICON_DIR"; then
+        log_error "Failed to create icon directory: $ICON_DIR"
+        echo -e "${YELLOW}Continuing without icon support...${RESET}"
+        icon_url=""
+    fi
+fi
+
+# Handle icon download/copy
+icon_path=""
+if [[ -n "$icon_url" ]]; then
+    icon_path="$ICON_DIR/$tui_name.png"
+
+    if [[ "$icon_url" =~ ^https?:// ]]; then
+        # Download from URL
+        echo -e "${BLUE}Downloading icon...${RESET}"
+        if curl -fsSL -o "$icon_path" "$icon_url" 2>&1; then
+            log_info "Icon downloaded successfully"
+        else
+            log_warn "Failed to download icon from: $icon_url"
+            echo -e "${YELLOW}Proceeding without icon...${RESET}"
+            icon_path=""
+        fi
+    elif [[ -f "$icon_url" ]]; then
+        # Copy local file
+        echo -e "${BLUE}Copying icon...${RESET}"
+        if cp "$icon_url" "$icon_path" 2>&1; then
+            log_info "Icon copied successfully"
+        else
+            log_warn "Failed to copy icon from: $icon_url"
+            echo -e "${YELLOW}Proceeding without icon...${RESET}"
+            icon_path=""
+        fi
+    else
+        log_warn "Icon path does not exist, proceeding without it"
+        icon_path=""
+    fi
+fi
+
+# Create desktop file
+echo -e "${BLUE}Creating desktop file...${RESET}"
+
+if ! cat > "$desktop_file" <<EOF
 [Desktop Entry]
 Version=1.0
 Name=$tui_name
-Comment=$tui_name
-Exec=kitty --class=$app_class -e $tui_exec
-Icon=$icon_dir/$tui_name.png
+Comment=$tui_name TUI Application
+Exec=$TERMINAL --class=$app_class -e $tui_exec
+${icon_path:+Icon=$icon_path}
 Terminal=false
 Type=Application
+Categories=System;ConsoleOnly;
 StartupNotify=true
 EOF
+then
+    log_error "Failed to create desktop file: $desktop_file"
+    echo -e "${RED}Check permissions for: $DESKTOP_DIR${RESET}"
+    exit 1
 fi
 
-update-desktop-database "$HOME/.local/share/applications"
+# Update desktop database
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
+fi
 
-# Wait for user input
-gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s'
+# Success summary
+echo
+echo -e "${GREEN}${BOLD}✓ TUI Application Created Successfully${RESET}"
+echo -e "${BLUE}Name:${RESET} $tui_name"
+echo -e "${BLUE}Command:${RESET} $tui_exec"
+echo -e "${BLUE}Style:${RESET} $window_style"
+echo -e "${BLUE}Desktop file:${RESET} $desktop_file"
+[[ -n "$icon_path" ]] && echo -e "${BLUE}Icon:${RESET} $icon_path"
+echo
+
+# EXIT trap will handle the pause
