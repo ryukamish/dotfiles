@@ -1,104 +1,104 @@
 // _*_ mode: jsonc _*_
 {
-  "reload_style_on_change": true,
-  "layer": "top",
-  "position": "top",
-  "height": 26,
+    "reload_style_on_change": true,
+    "layer": "top",
+    "position": "top",
+    "height": 26,
 
-  "modules-left": [
-      "hyprland/workspaces",
-      "backlight",
-      "group/network",
-      "custom/screenrecording-indicator" ],
-  "modules-center": [],
-  "modules-right": [
-    "group/expand-tray",
-    "group/hardware",
-    "group/audio",
-    "battery",
-    "clock"
-  ],
+    "modules-left": [
+        "hyprland/workspaces",
+        "backlight",
+        "group/network",
+        "custom/screenrecording-indicator" ],
+        "modules-center": [],
+        "modules-right": [
+            "group/expand-tray",
+            "group/hardware",
+            "group/audio",
+            "battery",
+            "clock"
+        ],
 
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-      "1": "I",
-      "2": "II",
-      "3": "III",
-      "4": "IV",
-      "5": "V",
-      "6": "VI",
-      "7": "VII",
-      "8": "VIII",
-      "9": "IX",
-      "on-click": "activate",
-      },
-      "persistent-workspaces": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-    },
-  },
+        "hyprland/workspaces": {
+            "format": "{icon}",
+            "format-icons": {
+                "1": "I",
+                "2": "II",
+                "3": "III",
+                "4": "IV",
+                "5": "V",
+                "6": "VI",
+                "7": "VII",
+                "8": "VIII",
+                "9": "IX",
+                "on-click": "activate",
+            },
+            "persistent-workspaces": {
+                "1": [],
+                "2": [],
+                "3": [],
+                "4": [],
+                "5": []
+            },
+        },
 
   // module groups
   "group/hardware": {
-    "orientation": "horizontal",
-    "modules": [
-      "cpu",
-      "memory",
-      "temperature"
-    ],
-    "drawer": {
-      "transition-left-to-right": false,
-      "duration": 400
-    }
+      "orientation": "horizontal",
+      "modules": [
+          "cpu",
+          "memory",
+          "temperature"
+      ],
+      "drawer": {
+          "transition-left-to-right": false,
+          "duration": 400
+      }
   },
 
   "group/audio": {
-    "orientation": "horizontal",
-    "modules": [
-      "bluetooth",
-      "pulseaudio"
-    ]
+      "orientation": "horizontal",
+      "modules": [
+          "bluetooth",
+          "pulseaudio"
+      ]
   },
 
   "group/network": {
-    "orientation": "horizontal",
-    "modules": [
-      "network",
-      "custom/vpn"
-    ],
+      "orientation": "horizontal",
+      "modules": [
+          "network",
+          "custom/vpn"
+      ],
   },
 
   "group/expand-tray": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 600,
-      "children-class": "tray-group-item"
-    },
-    "modules": ["custom/expand-icon", "tray"]
+      "orientation": "inherit",
+      "drawer": {
+          "transition-duration": 600,
+          "children-class": "tray-group-item"
+      },
+      "modules": ["custom/expand-icon", "tray"]
   },
 
   // Individual modules
   "memory": {
-    "interval": 12,
-    "format": " {}%",
+      "interval": 12,
+      "format": " {}%",
   },
 
   "clock": {
-    "interval": 60,
-    "tooltip": true,
-    "format": "󰥔 {:%H:%M} (IST)",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": " {:%a, %d, %b %Y}"
+      "interval": 60,
+      "tooltip": true,
+      "format": "󰥔 {:%H:%M} (IST)",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+      "format-alt": " {:%a, %d, %b %Y}"
   },
 
   "cpu": {
-    "interval": 5,
-    "format": " {avg_frequency}GHz <span color='#aaaaaa'>{usage}%</span>",
-    "on-click": "$TERMINAL --class=btop -e btop"
+      "interval": 5,
+      "format": " {avg_frequency}GHz <span color='#aaaaaa'>{usage}%</span>",
+      "on-click": "$TERMINAL --class=btop -e btop"
   },
 
   "temperature": {
@@ -109,93 +109,93 @@
   },
 
   "network": {
-    "interface": "wlan0",
-    "family": "ipv4",
-    "format": "{ifname}",
-    "format-wifi": "{icon} {essid} <span color='#aaaaaa'>{signalStrength}%</span>",
-    "format-ethernet": " {ipaddr}/<span color='#aaaaaa'>{cidr}</span>",
-    "format-disconnected": "󰇨 DC'D",
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨" ],
-    "tooltip-format": "{ifname} via {gwaddr}",
-    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-disconnected": "Disconnected",
-    "interval": 5,
-    "on-click": "$TERMINAL --class=Wifitui -e wifitui",
-    "on-click-right": "rfkill toggle wlan"
+      "interface": "wlan0",
+      "family": "ipv4",
+      "format": "{ifname}",
+      "format-wifi": "{icon} {essid} <span color='#aaaaaa'>{signalStrength}%</span>",
+      "format-ethernet": " {ipaddr}/<span color='#aaaaaa'>{cidr}</span>",
+      "format-disconnected": "󰇨 DC'D",
+      "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨" ],
+      "tooltip-format": "{ifname} via {gwaddr}",
+      "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+      "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+      "tooltip-format-disconnected": "Disconnected",
+      "interval": 5,
+      "on-click": "$TERMINAL --class=Wifitui -e wifitui",
+      "on-click-right": "rfkill toggle wlan"
   },
 
   "backlight": {
-    "device": "intel_backlight",
-    "format": "{icon} {percent}%",
-    "format-icons": ["", "", "", "", "", "", "", "", ""]
+      "device": "intel_backlight",
+      "format": "{icon} {percent}%",
+      "format-icons": ["", "", "", "", "", "", "", "", ""]
   },
 
   "bluetooth": {
-    "format": "",
-    "format-disabled": "<span color='#aaaaaa'>󰂲</span>",
-    "format-connected": "",
-    "tooltip-format": "Devices connected: {num_connections}\n{device_alias} at {device_battery_percentage}%",
-    "on-click": "$TERMINAL --title=Bluetui --class=TUI.float -e bluetui",
-    "on-click-right": "rfkill toggle bluetooth"
+      "format": "",
+      "format-disabled": "<span color='#aaaaaa'>󰂲</span>",
+      "format-connected": "",
+      "tooltip-format": "Devices connected: {num_connections}\n{device_alias} at {device_battery_percentage}%",
+      "on-click": "$TERMINAL --title=Bluetui --class=TUI.float -e bluetui",
+      "on-click-right": "rfkill toggle bluetooth"
   },
 
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "on-click": "$TERMINAL --title=Wiremix --class=TUI.float -e wiremix",
-    "tooltip-format": "{desc}",
-    "scroll-step": 5,
-    "format-muted": "<span color='#aaaaaa' </span>",
-    "format-icons": {
-      "headphone": "",
-      "default": ["", "", ""]
-    }
+      "format": "{icon} {volume}%",
+      "on-click": "$TERMINAL --title=Wiremix --class=TUI.float -e wiremix",
+      "tooltip-format": "{desc}",
+      "scroll-step": 5,
+      "format-muted": "<span color='#aaaaaa' </span>",
+      "format-icons": {
+          "headphone": "",
+          "default": ["", "", ""]
+      }
   },
 
   "battery": {
-    "format": "{capacity}% {icon}",
-    "format-discharging": "{icon} {capacity}%",
-    "format-charging": "{icon} {capacity}%",
-    "format-plugged": " [=] {capacity}%",
-    "format-full": " [=] {capacity}%",
-    "format-icons": {
-      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    },
-    "interval": 5,
-    "states": {
-      "warning": 20,
-      "critical": 10
-    }
+      "format": "{capacity}% {icon}",
+      "format-discharging": "{icon} {capacity}%",
+      "format-charging": "{icon} {capacity}%",
+      "format-plugged": " [=] {capacity}%",
+      "format-full": " [=] {capacity}%",
+      "format-icons": {
+          "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+          "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+      },
+      "interval": 5,
+      "states": {
+          "warning": 20,
+          "critical": 10
+      }
   },
 
   // Tray
   "tray": {
-    "icon-size": 12,
-    "spacing": 17
+      "icon-size": 12,
+      "spacing": 17
   },
 
   // Custom modules
   // TODO: Make a script such that it will show the connected
   // country as the name
   "custom/vpn": {
-    "format": " VPN",
-    "exec": "echo '{\"class\": \"connected\"}'",
-    "exec-if": "test -d /proc/sys/net/ipv4/conf/proton0",
-    "return-type": "json",
-    "interval": 5
+      "format": " VPN",
+      "exec": "echo '{\"class\": \"connected\"}'",
+      "exec-if": "test -d /proc/sys/net/ipv4/conf/proton0",
+      "return-type": "json",
+      "interval": 5
   },
 
   "custom/expand-icon": {
-    "format": "",
-    "tooltip": false
+      "format": "",
+      "tooltip": false
   },
 
   "custom/screenrecording-indicator": {
-    "on-click": "screenrecord",
-    "exec": "waybar-screenrecord",
-    "signal": 8,
-    "return-type": "json"
+      "on-click": "screenrecord",
+      "exec": "waybar-screenrecord",
+      "signal": 8,
+      "return-type": "json"
   }
 
 }
