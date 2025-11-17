@@ -1,0 +1,13 @@
+# Colors
+RED='\e[0;31m'      BLUE='\e[0;34m'     GREEN='\e[0;32m'    DIM='\e[2m'    RESET='\e[0m'
+
+if [ -f /usr/share/git/git-prompt.sh ]; then
+    source /usr/share/git/git-prompt.sh
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWUNTRACKEDFILES=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    PS1="${BLUE}\u@\h${RESET} ${DIM}in${RESET} ${GREEN}\w${RESET} ${DIM}on${RESET} ${RED}$(__git_ps1 " (%s)")${RESET}\n\$ "
+else
+    PS1="${BLUE}\u@\h${RESET} ${DIM}in${RESET} ${GREEN}\w${RESET}\n\$ "
+fi

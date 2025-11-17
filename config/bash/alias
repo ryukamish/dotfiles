@@ -1,3 +1,11 @@
 if command -v eza >/dev/null; then
   alias ls='eza -l --icons --group-directories-first'
 fi
+
+# neovim alias
+alias nv='nvim'
+
+# grep aliases
+if command -v rg >/dev/null; then
+  alias grep='rg --color=auto'
+fi
