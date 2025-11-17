@@ -5,7 +5,13 @@ fi
 # neovim alias
 alias nv='nvim'
 
-# grep aliases
-if command -v rg >/dev/null; then
-  alias grep='rg --color=auto'
-fi
+# cd alias
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# package management
+alias s='pacman -Ss'
+alias si='sudo pacman -S'
+alias y='yay -Ss'
+alias yi='yay -S'
