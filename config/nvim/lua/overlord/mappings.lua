@@ -5,10 +5,6 @@ local map = vim.keymap.set
 -- Save files with CTRL + S keymap
 map("n", "<C-S>", ":w<CR>")
 
--- Launch netrw with this keymap
--- map("n", "<leader>e", vim.cmd.Ex)
-map("n", "e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
 -- Exit neovim with this keymap
 map("n", "<leader>qq", vim.cmd.qa)
 
