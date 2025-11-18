@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 CACHEDIR="$HOME/.cache/hyprwall"
-WALLDIR="$HOME/.local/share/backgrounds"
+WALLDIR="$HOME/Pictures/Wallpapers"
 
 # Check if light or dark argument is provided
 if [ -z "$1" ]; then
@@ -100,22 +100,7 @@ if [ -n "$selected_index" ]; then
             fi
         fi
 
-        # Set wallpaper with your preferred tool
-        # Uncomment the one you use:
-
-        # For swww:
         swww img "$selected_wallpaper" --transition-type wave --transition-fps 60 --transition-duration 0.8
-
-        # For hyprpaper:
-        # hyprctl hyprpaper preload "$selected_wallpaper"
-        # hyprctl hyprpaper wallpaper ",$selected_wallpaper"
-
-        # For swaybg:
-        # killall swaybg
-        # swaybg -i "$selected_wallpaper" &
-
-        # For feh:
-        # feh --bg-fill "$selected_wallpaper"
         restart-app swayosd-server
 
         notify-send -u normal "Wallpaper changed" "Applied $MODE theme with pywal"
