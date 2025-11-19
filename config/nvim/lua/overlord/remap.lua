@@ -1,12 +1,19 @@
--- Set leaderkey to spacebar
-vim.g.mapleader = " "
-
 local map = vim.keymap.set
--- Save files with CTRL + S keymap
-map("n", "<C-S>", ":w<CR>")
 
--- Exit neovim with this keymap
-map("n", "<leader>qq", vim.cmd.qa)
+map('n', '<space><space>', '<cmd>source %<cr>')
+
+-- Open mini.files on the same file or directory
+map('n', '<leader>e', function()
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    local dir_name = vim.fn.fnamemodify(buf_name, ':p:h')
+    if vim.fn.filereadable(buf_name) == 1 then
+        require("mini.files").open(buf_name, true)
+    elseif vim.fn.isdirectory(dir_name) == 1 then
+        require('mini.files').open(dir_name, true)
+    else
+        require("mini.files").open(vim.uv.cwd(), true)
+    end
+end)
 
 -- Move lines when selected with visual mode
 map("v", "J", ":m '>+1<CR>gv=gv")
@@ -14,12 +21,6 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 
 map("x", "<leader>p", "\"_dP")
 
--- Universal clipboard support,
--- meaning yanking in nvim also copies it to system clipboard
-map({ "n", "v", "x" }, "<leader>y", [["+y]])
-map({ "n", "v", "x" }, "<leader>Y", [["+Y]])
-
--- Selecting a word and replacing all matching with another
 map("n", "<leader>bs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Making a script executable w/o leaving neovim
@@ -42,22 +43,3 @@ map("n", "<leader>h", [[:tabprevious<CR>]]) -- Previous tab
 
 map("n", "<leader>bw", [[:se wrap!<CR>]])   -- Toggle line wrapping
 
--- Terminal inside Neovim
-map("n", "<leader>t", function()
-    vim.cmd.vnew()
-    vim.cmd.term()
-    vim.cmd.wincmd("J")
-    vim.api.nvim_win_set_height(0, 12)
-end)
-
--- Exit terminal mode with ESC
-map('t', '<ESC>', [[<C-\><C-n>]], { noremap = true, silent = true })
-
-local term_augroup = vim.api.nvim_create_augroup("custom-term-open", { clear = true })
-vim.api.nvim_create_autocmd("TermOpen", {
-    group = term_augroup,
-    callback = function()
-        vim.opt.number = false
-        vim.opt.relativenumber = false
-    end,
-})
