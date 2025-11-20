@@ -1,7 +1,7 @@
-@import '~/.cache/wal/colors-rofi-light.rasi'
+@import '~/.cache/wal/colors-rofi-dark.rasi'
 
 * {
-    font: 'JetBrainsMono Nerd Font 13';
+    font: 'Iosevka Nerd Font Propo 13';
 }
 
 window {

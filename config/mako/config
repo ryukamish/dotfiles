@@ -1,7 +1,7 @@
 include=~/.cache/wal/colors-mako
 
 # Global settings
-font=JetBrainsMono Nerd Font 11
+font=Iosevka Nerd Font 11
 width=350
 margin=10
 padding=10
@@ -12,6 +12,9 @@ ignore-timeout=0
 max-visible=3
 layer=overlay
 anchor=top-right
+
+[urgency=low]
+default-timeout=5000
 
 [urgency=normal]
 border-color=#FFA500
