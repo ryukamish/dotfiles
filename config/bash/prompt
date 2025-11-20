@@ -1,7 +1,9 @@
 BLUE='\e[34m'    GREEN='\e[32m'  RESET='\e[0m'
 
-if command -v starship >/dev/null 2>&1; then
+deps=('starship' 'zoxide')
+if command -v "${deps[@]}" >/dev/null 2>&1; then
     eval "$(starship init bash)"
+    eval "$(zoxide init bash --cmd cd)"
 else
     PS1="${BLUE}\u@\h ${GREEN}\w${RESET}\n\$ "
 fi
