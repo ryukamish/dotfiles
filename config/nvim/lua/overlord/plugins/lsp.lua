@@ -24,5 +24,11 @@ return {
       filetypes = { 'css', 'scss', 'less' },
       capabilities = capabilities,
     })
+    -- JSON
+    lspconfig.enable('jsonls', {
+      cmd = { 'vscode-json-language-server', '--stdio' },
+      filetypes = { 'json', 'jsonc' },
+      capabilities = capabilities,
+    })
   end
 }

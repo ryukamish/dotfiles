@@ -13,7 +13,10 @@ return {
         "jsonc",
         "vimdoc",
         "markdown",
-        "markdown_inline" ,
+        "markdown_inline",
+        'yaml',
+        'toml',
+        'tmux',
       },
 
       highlight = {
