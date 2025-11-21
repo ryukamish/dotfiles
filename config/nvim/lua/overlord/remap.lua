@@ -2,6 +2,8 @@ local map = vim.keymap.set
 
 map('n', '<space><space>', '<cmd>source %<cr>')
 
+map('n', '<C-s>', [[<cmd>w<CR>]])
+
 -- Open mini.files on the same file or directory
 map('n', '<leader>e', function()
     local buf_name = vim.api.nvim_buf_get_name(0)
