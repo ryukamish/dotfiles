@@ -63,9 +63,9 @@ done > /tmp/rofi_wallpaper_menu.txt
 # Display rofi menu with large thumbnails and no text
 selected_index=$(cat /tmp/rofi_wallpaper_menu.txt | \
     rofi -dmenu -i \
-    -theme-str 'window {width: 85%; height: 85%; anchor: center; location: center;}' \
-    -theme-str 'listview {columns: 3; lines: 2; scrollbar: true;}' \
-    -theme-str 'element {orientation: vertical; padding: 5px;}' \
+    -theme-str 'window {width: 82%; anchor: center; location: center;}' \
+    -theme-str 'listview {columns: 3; lines: 1;}' \
+    -theme-str 'element {orientation: horizontal; padding: 5px;}' \
     -theme-str 'element-icon {size: 300px;}' \
     -theme-str 'element-text {enabled: false;}' \
     -theme-str 'inputbar {enabled: false;}' \
