@@ -3,7 +3,7 @@
 * {
     border: none;
     font-family: "Iosevka Nerd Font Propo";
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
 }
 
@@ -41,6 +41,11 @@ window#waybar.hidden {
     opacity: 0.125;
 }
 
+#workspaces button.active.empty {
+    opacity: 1;
+    color: @color1;
+}
+
 #workspaces button.urgent {
     color: #ffffff;
     background-color: rgba(255, 0, 0, 0.5);
@@ -58,11 +63,19 @@ window#waybar.hidden {
 #memory,
 #pulseaudio,
 #temperature {
-    margin: 0 0.5em;
+    margin: 0 0.8em;
 }
 
 #tray {
     margin-left: 12px;
+}
+
+#battery:not(.charging).warning {
+    color: #FFA500;
+}
+
+#battery:not(.charging).critical {
+    color: #FF0000;
 }
 
 /* Groups */

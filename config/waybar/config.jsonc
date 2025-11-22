@@ -3,7 +3,6 @@
     "reload_style_on_change": true,
     "layer": "top",
     "position": "top",
-    "height": 26,
 
     "modules-left": [
         "hyprland/workspaces",
@@ -167,7 +166,7 @@
 
   // Tray
   "tray": {
-      "icon-size": 12,
+      "icon-size": 10,
       "spacing": 10
   },
 
