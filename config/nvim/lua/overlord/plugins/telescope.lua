@@ -9,5 +9,6 @@ return {
     map('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
     map('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
     map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+    map('n', '<leader>bf', builtin.current_buffer_fuzzy_find, { desc = 'Telescope current buffer' })
   end,
 }
