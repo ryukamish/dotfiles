@@ -3,12 +3,12 @@
 set -euo pipefail
 
 # Colors
-RED='\e[31m'
-GREEN='\e[32m'
-YELLOW='\e[33m'
-BLUE='\e[34m'
-BOLD='\e[1m'
-RESET='\e[0m'
+readonly RED='\e[31m'
+readonly GREEN='\e[32m'
+readonly YELLOW='\e[33m'
+readonly BLUE='\e[34m'
+readonly BOLD='\e[1m'
+readonly RESET='\e[0m'
 
 # Check required tools
 for tool in fzf yay; do
@@ -22,7 +22,7 @@ done
 # FZF configuration
 fzf_args=(
     --multi
-    --preview 'yay -Sia {1}'
+    --preview 'yay -Sii {1}'
     --preview-label-pos='bottom'
     --preview-window 'down:65%:wrap'
     --color 'pointer:green,marker:green'
@@ -33,7 +33,7 @@ fzf_args=(
 echo -e "${BLUE}${BOLD}Loading AUR package list...${RESET}\n"
 
 # Get package selections
-pkg_names=$(yay -Slqa | fzf "${fzf_args[@]}" || true)
+pkg_names=$(yay -qSs | fzf "${fzf_args[@]}" || true)
 
 # Check if user selected anything
 if [[ -z "$pkg_names" ]]; then
