@@ -1,5 +1,8 @@
+#!/usr/bin/env bash
+
 if command -v eza >/dev/null; then
   alias ls='eza -l --icons --group-directories-first'
+  alias la='eza -l --icons --group-directories-first --long --all'
 fi
 
 # neovim alias
@@ -15,3 +18,9 @@ alias s='pacman -Ss'
 alias si='sudo pacman -S'
 alias y='yay -Ss'
 alias yi='yay -S'
+
+alias she='sesh connect $(sesh list | fzf)'
+
+if command -v rustormy >/dev/null; then
+  alias weather='rustormy -c Ranchi --colors'
+fi

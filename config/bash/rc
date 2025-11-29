@@ -1,4 +1,8 @@
 export PATH="${PATH}:$HOME/.local/bin"
+export PATH="${PATH}:$HOME/.cargo/bin"
+
+# CD paths
+export CDPATH=".:~:~/Downloads:~/Documents:~/Pictures:~/Videos:~/Music:~/Work:~/Work/codeberg"
 
 # XDG Directories
 export XDG_CONFIG_HOME="$HOME/.config"
