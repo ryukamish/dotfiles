@@ -108,7 +108,7 @@ Snapshots can be used to go back to the time when the system was not updated and
 
 - [LUKS2 encrypted BTRFS system partition with Limine/Snapper integration and hibernate to swapfile
 ](https://gist.github.com/yovko/512326b904d120f3280c163abfbcb787)
-- [LUKS2 encrypted system with different home and root partition](https://gist.github.com/yovko/512326b904d120f3280c163abfbcb787#disk-partitioning)
+- [LUKS2 encrypted system with different home and root partition](https://gist.github.com/mjnaderi/28264ce68f87f52f2cabb823a503e673)
 
 ## License
 
