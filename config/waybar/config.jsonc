@@ -9,9 +9,10 @@
         "backlight",
         "group/network",
         "custom/screenrecording-indicator" ],
-        "modules-center": [],
+        "modules-center": ["custom/spotify-indicator"],
         "modules-right": [
             "group/expand-tray",
+            // "tray",
             "group/hardware",
             "group/audio",
             "battery",
@@ -19,18 +20,19 @@
         ],
 
         "hyprland/workspaces": {
+            "on-click": "activate",
             "format": "{icon}",
             "format-icons": {
-                "1": "I",
-                "2": "II",
-                "3": "III",
-                "4": "IV",
-                "5": "V",
-                "6": "VI",
-                "7": "VII",
-                "8": "VIII",
-                "9": "IX",
-                "on-click": "activate",
+                "1": "一",
+                "2": "二",
+                "3": "三",
+                "4": "四",
+                "5": "五",
+                "6": "六",
+                "7": "七",
+                "8": "八",
+                "9": "九",
+                "10": "十"
             },
             "persistent-workspaces": {
                 "1": [],
@@ -45,7 +47,6 @@
   "group/hardware": {
       "orientation": "horizontal",
       "modules": [
-          "cpu",
           "memory",
           "temperature"
       ]
@@ -80,7 +81,7 @@
   "clock": {
       "interval": 60,
       "tooltip": true,
-      "format": "󰥔 {:%H:%M} (IST)",
+      "format": " {:%R  %d/%m}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
       "format-alt": " {:%a, %d, %b %Y}"
   },
@@ -88,12 +89,6 @@
   "memory": {
       "interval": 12,
       "format": " {}%",
-  },
-
-  "cpu": {
-      "interval": 5,
-      "format": " {usage}%",
-      "on-click": "$TERMINAL --class=btop -e btop"
   },
 
   "temperature": {
@@ -104,10 +99,10 @@
   },
 
   "network": {
-      "interface": "wlan0",
+      "interface": "wlo1",
       "family": "ipv4",
       "format": "{ifname}",
-      "format-wifi": "{icon} {essid} <span color='#aaaaaa'>{signalStrength}%</span>",
+      "format-wifi": "{icon} {essid}",
       "format-ethernet": " {ipaddr}/<span color='#aaaaaa'>{cidr}</span>",
       "format-disconnected": "󰇨 DC'D",
       "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨" ],
@@ -127,9 +122,9 @@
   },
 
   "bluetooth": {
-      "format": "",
+      "format": " {num_connections}",
       "format-disabled": "<span color='#aaaaaa'>󰂲</span>",
-      "format-connected": "",
+      "format-connected": " {num_connections}",
       "tooltip-format": "Devices connected: {num_connections}\n{device_alias} at {device_battery_percentage}%",
       "on-click": "$TERMINAL --title=Bluetui --class=TUI.float -e bluetui",
       "on-click-right": "rfkill toggle bluetooth"
@@ -151,8 +146,8 @@
       "format": "{capacity}% {icon}",
       "format-discharging": "{icon} {capacity}%",
       "format-charging": "{icon} {capacity}%",
-      "format-plugged": " [=] {capacity}%",
-      "format-full": " [=] {capacity}%",
+      "format-plugged": " {capacity}%",
+      "format-full": "󰁹 {capacity}%",
       "format-icons": {
           "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
           "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
@@ -180,7 +175,7 @@
   },
 
   "custom/expand-icon": {
-      "format": "",
+      "format": " ",
       "tooltip": false
   },
 
@@ -189,6 +184,21 @@
       "exec": "waybar-screenrecord",
       "signal": 8,
       "return-type": "json"
+  },
+
+  "custom/spotify-indicator": {
+      "exec-if": "pgrep spotify",
+      "exec": "/usr/bin/python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
+      "return-type": "json",
+      "on-click": "playerctl -p spotify play-pause",
+      "on-click-right": "killall spotify",
+      "on-scroll-up": "playerctl -p spotify next",
+      "on-scroll-down": "playerctl -p spotify previous",
+      "smooth-scrolling-threshold": 0.5,
+      "escape": true,
+      "format": "<span color='#1DB954'> {}</span>",
+      "max-length": 40,
+      "tooltip": false
   }
 
 }
