@@ -17,6 +17,7 @@ case "$power_args" in
         systemctl hibernate
         ;;
     *Shutdown)
-        systemctl poweroff
+        hyprctl dispatch killactive && sleep 0.1 && hyprctl dispatch killactive && sleep 0.1 && systemctl poweroff
+        # hyprctl clients -j | jq -r '.[].pid' | xargs -r kill -9; systemctl poweroff
         ;;
 esac
