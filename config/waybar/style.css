@@ -1,10 +1,11 @@
-@import "../../.cache/wal/colors-waybar.css";
+@import "colors.css";
 
 * {
     border: none;
-    font-family: "Iosevka Nerd Font Propo";
-    font-size: 11px;
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 12px;
     font-weight: bold;
+    min-height: 0;
 }
 
 /* Keyframe animations */
@@ -21,53 +22,53 @@
 }
 
 window#waybar {
-    background-color: alpha(@background, 0.889);
-}
-
-window#waybar.hidden {
-    opacity: 0.2;
+    background-color: alpha(@background, 0.79);
 }
 
 /* Workspaces */
 #workspaces {
-    margin-right: 1em;
+    margin-right: 1rem;
 }
 
 #workspaces button.active {
+    color: @color2;
+}
+
+#workspaces button.empty.active {
     color: @color1;
+    opacity: 1;
 }
 
 #workspaces button.empty {
-    opacity: 0.125;
-}
-
-#workspaces button.active.empty {
-    opacity: 1;
-    color: @color1;
+    opacity: 0.2;
 }
 
 #workspaces button.urgent {
     color: #ffffff;
     background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 0;
 }
 
 /* Modules */
 #battery,
 #clock {
-    margin: 0 1em;
+    margin: 0 0.55rem;
 }
 
 #backlight,
 #bluetooth,
 #cpu,
 #memory,
-#pulseaudio,
-#temperature {
-    margin: 0 0.8em;
+#pulseaudio {
+    margin: 0 0.55rem;
 }
 
 #tray {
-    margin-left: 12px;
+    margin-left: 10px;
+}
+
+#bluetooth.connected {
+    color: @color1;
 }
 
 #battery:not(.charging).warning {
@@ -78,12 +79,16 @@ window#waybar.hidden {
     color: #FF0000;
 }
 
+#network.disconnected {
+    color: @color2;
+}
+
 /* Groups */
 #audio,
 #expand-tray,
 #hardware,
 #network {
-    margin: 0 1em;
+    margin: 0 0.55rem;
 }
 
 /* Custom modules */
@@ -97,5 +102,5 @@ window#waybar.hidden {
 }
 
 #expand-tray {
-    margin: 0 1em;
+    margin: 0 0.55rem;
 }

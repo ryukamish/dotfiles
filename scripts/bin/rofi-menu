@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-menu_args=$(printf '%b' '󰕓 Devices\n Files\n Install\n󰔎 Theme\n  Record Screen\n󰮞 Remove\n󰣇 Update' | rofi -dmenu -p " Options: " -i -theme-str "window {width: 20em;}")
+menu_args=$(printf '%b' '󰕓 Devices\n Files\n Install\n󰔎 Theme\n Record Screen\n󰮞 Remove\n󰣇 Update' | rofi -dmenu -p " Options: " -i -theme-str "window {width: 20em;}")
 
 case "$menu_args" in
     *Files)
@@ -35,13 +35,24 @@ case "$menu_args" in
     *Theme)
         # For the time being only GUI apps
         # change theme i.e. Light & Dark
-        theme_args=$(printf '%b' ' Light\n Dark' | rofi -dmenu -p ' Mode: ' -i)
+        theme_args=$(printf '%b' '󰸉 Change Wallpaper\n Colorscheme' | rofi -dmenu -p '' -i)
         case "$theme_args" in
-            *Light)
-                hyprwall light
+            *Change\ Wallpaper)
+                hyprwall
                 ;;
-            *Dark)
-                hyprwall dark
+            *Colorscheme)
+                theme_args=$(printf '%b' 'Catppuccin Mocha\nRose Pine\nTokyonight' | rofi -dmenu -p 'Colorscheme: ' -i)
+                case "$theme_args" in
+                    *Catppuccin\ Mocha)
+                        rofi-theme-switcher catppuccin-mocha
+                        ;;
+                    *Rose\ Pine)
+                        rofi-theme-switcher rose-pine
+                        ;;
+                    *Tokyonight)
+                        rofi-theme-switcher tokyonight
+                        ;;
+                esac
                 ;;
         esac
         ;;

@@ -1,7 +1,7 @@
-include=~/.cache/wal/colors-mako
+include=~/.config/mako/colors.ini
 
 # Global settings
-font=Iosevka Nerd Font Mono 11
+font=JetBrainsMono Nerd Font 12
 width=350
 margin=10
 padding=10
@@ -17,10 +17,7 @@ anchor=top-right
 default-timeout=5000
 
 [urgency=normal]
-border-color=#FFA500
 default-timeout=10000
 
-# Styling for urgent notifications
 [urgency=high]
-border-color=#ff0000
 default-timeout=50000

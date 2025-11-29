@@ -1,0 +1,27 @@
+* {
+    background:     #191724;
+    foreground:     #e0def4;
+    selected:       #ebbcba;
+    active:         #9ccfd8;
+    urgent:         #eb6f92;
+}
+
+window {
+    border-color: @selected;
+}
+
+element.selected.normal {
+    background-color: @selected;
+}
+
+element.alternate.normal {
+    background-color: transparent;
+}
+
+element-text.selected {
+    text-color:       @background;
+}
+
+element-text.selected.urgent {
+    text-color:       @urgent;
+}

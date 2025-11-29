@@ -1,14 +1,13 @@
-@import '~/.cache/wal/colors-rofi-dark.rasi'
+@import 'colors.rasi'
 
 * {
-    font: 'Iosevka Nerd Font Propo 13';
+    font: 'JetBrainsMono Nerd Font 12';
 }
 
 window {
     transparency: "real";
     width: 24em;
     border: 2px;
-    border-color: @foreground;
     border-radius: 10px;
     padding: 12px;
 }
@@ -49,11 +48,6 @@ mainbox {
 element {
     spacing: 8px;
     margin: 4px;
-    padding: 4px;
-    border: 2px solid;
+    padding: 6px;
     border-radius: 10px;
-}
-
-element-text.selected {
-    text-color: @background;
 }
