@@ -1,0 +1,29 @@
+/*Dracula theme based on the Purple official rofi theme*/
+
+* {
+    foreground: #f8f8f2;
+    background: #282a36;
+    selected: #6272a4;
+    active: #804BA1;
+    urgent: #ff0000;
+}
+
+window {
+    border-color: @selected;
+}
+
+element.selected.normal {
+    background-color: @active;
+}
+
+element.alternate.normal {
+    background-color: transparent;
+}
+
+element-text.selected {
+    text-color:       @background;
+}
+
+element-text.selected.urgent {
+    text-color:       @urgent;
+}

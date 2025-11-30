@@ -1,0 +1,29 @@
+* {
+    background: #282828;
+    foreground: #ebdbb2;
+
+    color1:     #fe8019;
+    color4:        #fb4934;
+    color2:      #b8bb26;
+    color3:     #fabd2f;
+}
+
+window {
+    border-color: @color3;
+}
+
+element.selected.normal {
+    background-color: @color2;
+}
+
+element.alternate.normal {
+    background-color: transparent;
+}
+
+element-text.selected {
+    text-color:       @background;
+}
+
+element-text.selected.urgent {
+    text-color:       @color1;
+}

@@ -31,11 +31,11 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: @color2;
+    color: @color1;
 }
 
 #workspaces button.empty.active {
-    color: @color1;
+    color: @color2;
     opacity: 1;
 }
 
@@ -64,7 +64,7 @@ window#waybar {
 }
 
 #tray {
-    margin-left: 10px;
+    margin-left: 0.25rem;
 }
 
 #bluetooth.connected {

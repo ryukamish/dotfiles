@@ -54,6 +54,13 @@ apply_hyprland() {
 }
 
 case ${1:-} in
+    "blacklotus")
+        apply_waybar "blacklotus"
+        apply_mako "blacklotus"
+        apply_kitty "blacklotus"
+        apply_rofi "blacklotus"
+        apply_hyprland "blacklotus"
+        ;;
     "tokyonight")
         apply_waybar "tokyonight"
         apply_mako "tokyonight"
@@ -62,18 +69,39 @@ case ${1:-} in
         apply_hyprland "tokyonight"
         ;;
     "rose-pine")
-        apply_waybar "tokyonight"
+        apply_waybar "rose-pine"
         apply_mako "rose-pine"
         apply_kitty "rose-pine"
         apply_rofi "rose-pine"
         apply_hyprland "rose-pine"
         ;;
     "catppuccin-mocha")
-        apply_waybar "tokyonight"
+        apply_waybar "catppuccin-mocha"
         apply_mako "catppuccin-mocha"
         apply_kitty "catppuccin-mocha"
         apply_rofi "catppuccin-mocha"
         apply_hyprland "catppuccin-mocha"
+        ;;
+    "kanagawa")
+        apply_waybar "kanagawa"
+        apply_mako "kanagawa"
+        apply_kitty "kanagawa"
+        apply_rofi "kanagawa"
+        apply_hyprland "kanagawa"
+        ;;
+    "dracula")
+        apply_waybar "dracula"
+        apply_mako "dracula"
+        apply_kitty "dracula"
+        apply_rofi "dracula"
+        apply_hyprland "dracula"
+        ;;
+    "gruvbox-dark")
+        apply_waybar "gruvbox-dark"
+        apply_mako "gruvbox-dark"
+        apply_kitty "gruvbox-dark"
+        apply_rofi "gruvbox-dark"
+        apply_hyprland "gruvbox-dark"
         ;;
     *)
         echo "Usage: $0 [tokyonight|rose-pine|catppuccin-mocha]"

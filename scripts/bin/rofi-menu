@@ -41,10 +41,22 @@ case "$menu_args" in
                 hyprwall
                 ;;
             *Colorscheme)
-                theme_args=$(printf '%b' 'Catppuccin Mocha\nRose Pine\nTokyonight' | rofi -dmenu -p 'Colorscheme: ' -i)
+                theme_args=$(printf '%b' 'Black Lotus\nCatppuccin Mocha\nDracula\nGruvbox Dark\nKanagawa\nRose Pine\nTokyonight' | rofi -dmenu -p 'Colorscheme: ' -i)
                 case "$theme_args" in
+                    *Black\ Lotus)
+                        rofi-theme-switcher blacklotus
+                        ;;
                     *Catppuccin\ Mocha)
                         rofi-theme-switcher catppuccin-mocha
+                        ;;
+                    *Dracula)
+                        rofi-theme-switcher dracula
+                        ;;
+                    *Gruvbox\ Dark)
+                        rofi-theme-switcher gruvbox-dark
+                        ;;
+                    *Kanagawa)
+                        rofi-theme-switcher kanagawa
                         ;;
                     *Rose\ Pine)
                         rofi-theme-switcher rose-pine
