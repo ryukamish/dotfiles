@@ -1,0 +1,67 @@
+# ~/.zshrc
+# If you use ~/.config/zsh for everything (cleaner)
+export ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# Path to your oh-my-zsh-like plugins (we're not using full OMZ, just the plugins)
+ZSH_CUSTOM="$ZDOTDIR/plugins"
+
+# ─── Plugins ─────────────────────────────────────────────────
+plugins=(
+  zsh-autosuggestions      # fish-like autosuggestions (gray text)
+  zsh-syntax-highlighting  # colors commands that are valid/invalid
+)
+
+# Load plugins
+for plugin in $plugins; do
+    source "$ZSH_CUSTOM/$plugin/${plugin}.zsh"
+done
+
+# Make autosuggestions a bit faster and change color
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#999999"
+
+# ─── Completion system (modern menu) ─────────────────────────
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select                # arrow-key menu
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # case insensitive
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # colored completion
+zstyle ':completion:*' rehash true                # auto-refresh completion if new programs installed
+
+# ─── Starship prompt (beautiful & fast) ──────────────────────
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
+
+# ─── History settings ───────────────────────────────────────
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.local/share/zsh/history
+setopt SHARE_HISTORY          # share history between sessions
+setopt HIST_IGNORE_DUPS       # don't save duplicates
+setopt HIST_IGNORE_SPACE      # ignore commands starting with space
+
+# ─── Key bindings (Emacs style by default, but make it nice) ─
+bindkey '^[[Z' autosuggest-accept   # Shift+Tab accepts suggestion
+bindkey '^ ' autosuggest-accept     # Ctrl+Space also accepts
+bindkey '^[[A' history-beginning-search-backward  # Up arrow: search history
+bindkey '^[[B' history-beginning-search-forward   # Down arrow: search history
+
+# ─── Useful aliases ─────────────────────────────
+alias ls='eza -l --group-directories-first --icons --git'
+alias ll='eza -lh --group-directories-first --icons --git'
+alias la='eza -lah --group-directories-first --icons --git'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias df='df -h'
+alias free='free -h'
+# package management
+alias s='pacman -Ss'
+alias si='pacman -S'
+# neovim
+alias nv='nvim'
+
+if command -v rustormy > /dev/null; then
+    alias weather='rustormy -c Ranchi --colors'
+fi
