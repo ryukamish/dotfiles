@@ -2,8 +2,6 @@ local map = vim.keymap.set
 
 map('n', '<space><space>', '<cmd>source %<cr>')
 
-map('n', '<C-s>', [[<cmd>w<CR>]])
-
 -- File explorer
 map('n', '<leader>e', "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
