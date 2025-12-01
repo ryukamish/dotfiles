@@ -22,7 +22,7 @@
 }
 
 window#waybar {
-    background-color: alpha(@background, 0.79);
+    background-color: @background;
 }
 
 /* Workspaces */
