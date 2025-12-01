@@ -4,22 +4,12 @@ map('n', '<space><space>', '<cmd>source %<cr>')
 
 map('n', '<C-s>', [[<cmd>w<CR>]])
 
--- Open mini.files on the same file or directory
-map('n', '<leader>e', function()
-    local buf_name = vim.api.nvim_buf_get_name(0)
-    local dir_name = vim.fn.fnamemodify(buf_name, ':p:h')
-    if vim.fn.filereadable(buf_name) == 1 then
-        require("mini.files").open(buf_name, true)
-    elseif vim.fn.isdirectory(dir_name) == 1 then
-        require('mini.files').open(dir_name, true)
-    else
-        require("mini.files").open(vim.uv.cwd(), true)
-    end
-end)
+-- File explorer
+map('n', '<leader>e', "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Move lines when selected with visual mode
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "<M-j>", ":m '>+1<CR>gv=gv")
+map("v", "<M-k>", ":m '<-2<CR>gv=gv")
 
 map("x", "<leader>p", "\"_dP")
 
@@ -45,5 +35,5 @@ map("n", "<leader>h", [[:tabprevious<CR>]]) -- Previous tab
 
 map("n", "<leader>bw", [[:se wrap!<CR>]])   -- Toggle line wrapping
 
-map('t', '<esc>', [[<C-\><C-n>]])   -- Escape neovim terminal with escape key
+map('t', '<esc><esc>', [[<C-\><C-n>]])   -- Escape neovim terminal with escape key
 map('n', '<space>t', '<cmd>terminal<cr>')   -- Terminal inside neovim

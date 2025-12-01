@@ -17,6 +17,7 @@ return {
         'yaml',
         'toml',
         'tmux',
+        'ini',
       },
 
       highlight = {

@@ -1,5 +1,9 @@
 local map = vim.opt
 
+-- Don't change the cursor when going from normal to insert mode
+vim.opt.guicursor = ""
+
+-- Numbers and relative numbers
 map.nu = true
 map.rnu = true
 

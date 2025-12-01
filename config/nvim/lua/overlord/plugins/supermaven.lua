@@ -8,13 +8,16 @@ return {
           clear_suggestion = "<C-]>",
           accept_word = "<C-j>",
         },
-          color = {
-            suggestion_color = '#0055FF',
-            cterm = 244,
-          },
-          log_level = 'info',
-          disable_keymaps = false,
-        })
-      end,
-    },
-  }
+        color = {
+          suggestion_color = '#ffffff',
+          cterm = 244,
+        },
+        log_level = 'info',
+        disable_keymaps = false,
+        condition = function()
+          return string.match(vim.fn.expand('%:t'), '%.md$')
+        end,
+      })
+    end,
+  },
+}
