@@ -13,7 +13,7 @@ return {
     nvim_api(0, "NormalNC", { bg = "none" })
 
     -- Transparent float borders
-    nvim_api(0, "FloatBorder", { bg = "none" })
+    -- nvim_api(0, "FloatBorder", { bg = "none" })
 
     -- Transparent line numbers
     nvim_api(0, "LineNr", { bg = "none" })

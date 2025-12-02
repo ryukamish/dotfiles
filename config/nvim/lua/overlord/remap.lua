@@ -6,8 +6,8 @@ map('n', '<space><space>', '<cmd>source %<cr>')
 map('n', '<leader>e', "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Move lines when selected with visual mode
-map("v", "<M-j>", ":m '>+1<CR>gv=gv")
-map("v", "<M-k>", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
 map("x", "<leader>p", "\"_dP")
 
