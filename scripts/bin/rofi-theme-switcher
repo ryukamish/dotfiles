@@ -53,6 +53,15 @@ apply_hyprland() {
     fi
 }
 
+apply_eza() {
+    local theme="$1"
+    local theme_file="$HOME/.config/eza/theme.yml"
+
+    if [ -f "$theme_file" ]; then
+        [ -d "$HOME/.config/eza/themes" ] && cat < "$HOME/.config/eza/themes/$1.yml" > "$theme_file"
+    fi
+}
+
 case ${1:-} in
     "blacklotus")
         apply_waybar "blacklotus"
@@ -67,6 +76,7 @@ case ${1:-} in
         apply_kitty "tokyonight"
         apply_rofi "tokyonight"
         apply_hyprland "tokyonight"
+        apply_eza "tokyonight"
         ;;
     "rose-pine")
         apply_waybar "rose-pine"
@@ -74,6 +84,7 @@ case ${1:-} in
         apply_kitty "rose-pine"
         apply_rofi "rose-pine"
         apply_hyprland "rose-pine"
+        apply_eza "rose-pine"
         ;;
     "catppuccin-mocha")
         apply_waybar "catppuccin-mocha"
@@ -81,6 +92,7 @@ case ${1:-} in
         apply_kitty "catppuccin-mocha"
         apply_rofi "catppuccin-mocha"
         apply_hyprland "catppuccin-mocha"
+        apply_eza "catppuccin-mocha"
         ;;
     "kanagawa")
         apply_waybar "kanagawa"
@@ -95,6 +107,7 @@ case ${1:-} in
         apply_kitty "dracula"
         apply_rofi "dracula"
         apply_hyprland "dracula"
+        apply_eza "dracula"
         ;;
     "gruvbox-dark")
         apply_waybar "gruvbox-dark"
@@ -102,6 +115,7 @@ case ${1:-} in
         apply_kitty "gruvbox-dark"
         apply_rofi "gruvbox-dark"
         apply_hyprland "gruvbox-dark"
+        apply_eza "gruvbox-dark"
         ;;
     *)
         echo "Usage: $0 [tokyonight|rose-pine|catppuccin-mocha]"

@@ -1,0 +1,66 @@
+colourful: true
+
+# File types
+dir:
+  fg: "#6A9589"  # waveAqua1
+  style: bold
+file:
+  fg: "#DCD7BA"  # fujiWhite
+link:
+  fg: "#957FB8"  # oniViolet
+  style: italic
+pipe:
+  fg: "#FF9E3B"  # roninYellow
+sock:
+  fg: "#7E9CD8"  # crystalBlue
+block:
+  fg: "#98BB6C"  # springGreen
+char:
+  fg: "#E6C384"  # carpYellow
+exec:
+  fg: "#FF9E3B"  # roninYellow
+  style: bold
+special:
+  fg: "#E82424"  # samuraiRed
+  style: bold
+missing:
+  fg: "#E82424"  # samuraiRed
+  style: bold
+.git:
+  fg: "#76946A"  # autumnGreen
+  style: dim
+
+# Common extensions
+*.jpg,*.jpeg,*.gif,*.bmp,*.pbm,*.pgm,*.ppm,*.pnm,*.png,*.svg,*.svgz,*.mng,*.pcx,*.mov,*.mpg,*.mpeg,*.m2v,*.mkv,*.webm,*.webp,*.gifv,*.mp4,*.m4v,*.ogm,*.mp4v,*.avi:
+  fg: "#98BB6C"  # springGreen (images/videos)
+*.mp3,*.flac,*.wav,*.m4a,*.aac,*.ogg:
+  fg: "#7AA89F"  # waveAqua2 (audio)
+*.zip,*.tar.gz,*.rar,*.7z,*.tar.bz2,*.tar.xz,*.tar,*.gz,*.bz2,*.xz:
+  fg: "#C34043"  # autumnRed (archives)
+*.pdf:
+  fg: "#D27E99"  # sakuraPink
+*.rs,*.go,*.py,*.js,*.ts,*.sh,*.c,*.cpp,*.h,*.lua:
+  fg: "#7FB4CA"  # springBlue (code)
+
+# Git status
+git:
+  added:    "#76946A"  # autumnGreen
+  modified: "#DCA561"  # autumnYellow
+  renamed:  "#7FB4CA"  # springBlue
+  deleted:  "#E82424"  # samuraiRed
+  untracked:"#957FB8"  # oniViolet
+  ignored:  "#727169"  # fujiGray
+  staged:   "#FF9E3B"  # roninYellow
+  conflicted: "#E82424"  # samuraiRed
+
+# Permissions (rwx for user/group/other)
+perm:
+  r: "#76946A"  # autumnGreen
+  w: "#DCA561"  # autumnYellow
+  x: "#FF9E3B"  # roninYellow
+
+# Metadata
+size:
+  fg: "#C0A36E"  # boatYellow2
+date:
+  fg: "#9CABCA"  # springViolet2
