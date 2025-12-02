@@ -1,4 +1,5 @@
 7zip
+age
 bash-completion
 bash-language-server
 bat
@@ -45,6 +46,7 @@ libnotify
 libva-intel-driver
 linux-firmware
 linux-headers
+localsend-bin
 lua-language-server
 ly
 mako
@@ -57,12 +59,10 @@ noto-fonts-cjk
 noto-fonts-emoji
 npm
 opusfile
-otf-font-awesome
 pacman-contrib
 pipewire-pulse
 poppler
 proton-vpn-gtk-app
-python-pywal16
 qbittorrent
 qt5-wayland
 qt6-wayland
@@ -71,6 +71,7 @@ rofi
 rofi-emoji
 rsync
 satty
+sesh-bin
 shellcheck
 slurp
 snapper
@@ -88,7 +89,6 @@ tlp
 tmux
 trash-cli
 tree
-ttf-iosevka-nerd
 ttf-jetbrains-mono-nerd
 udisks2-btrfs
 ufw
@@ -115,3 +115,7 @@ zathura-pdf-mupdf
 zen-browser-bin
 zoxide
 zram-generator
+zsh
+zsh-autosuggestions
+zsh-completions
+zsh-syntax-highlighting
