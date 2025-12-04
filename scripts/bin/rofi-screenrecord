@@ -9,7 +9,6 @@ case "$screenrecord_args" in
 *DISPLAY+AUDIO)
   screenrecord output --with-audio
   ;;
-  # FIX: screenrecording with webcam not triggering
 *DISPLAY+WEBCAM)
   screenrecord output --with-webcam --with-audio
   ;;
