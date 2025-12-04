@@ -1,0 +1,90 @@
+# Black Lotus Theme for eza
+# Based on the official Black Lotus color scheme
+
+colourful: true
+
+filekinds:
+  normal: {foreground: "#C8C8C8"}          # Foreground light gray for regular files
+  directory: {foreground: "#8853C7"}       # Accent purple for directories
+  symlink: {foreground: "#2F88FF"}         # Accent blue for symlinks
+  pipe: {foreground: "#6DABD6"}            # Normal blue for pipes
+  block_device: {foreground: "#3F6CAD"}    # Normal darker blue for block devices
+  char_device: {foreground: "#3F6CAD"}     # Normal darker blue for char devices
+  socket: {foreground: "#416488"}          # Normal slate blue for sockets
+  special: {foreground: "#8853C7"}         # Accent purple for special files
+  executable: {foreground: "#2F88FF"}      # Accent bright blue for executables
+  mount_point: {foreground: "#553976"}     # Normal purple for mount points
+
+perms:
+  user_read: {foreground: "#C8C8C8"}       # Foreground light gray for read
+  user_write: {foreground: "#A55377"}      # Normal pink for write
+  user_execute_file: {foreground: "#2F88FF"}    # Accent bright blue for execute
+  user_execute_other: {foreground: "#2F88FF"}   # Accent bright blue for execute
+  group_read: {foreground: "#C8C8C8"}      # Foreground light gray for group read
+  group_write: {foreground: "#A55377"}     # Normal pink for group write
+  group_execute: {foreground: "#2F88FF"}   # Accent bright blue for group execute
+  other_read: {foreground: "#A6A6A6"}      # Foreground dim gray for other read
+  other_write: {foreground: "#A55377"}     # Normal pink for other write
+  other_execute: {foreground: "#2F88FF"}   # Accent bright blue for other execute
+  special_user_file: {foreground: "#8853C7"}    # Accent purple for setuid
+  special_other: {foreground: "#553976"}   # Normal purple for sticky
+  attribute: {foreground: "#ADC4E3"}       # Normal light blue for attributes
+
+size:
+  major: {foreground: "#C8CC86"}           # Bright yellow-green for major size
+  minor: {foreground: "#D9C793"}           # Bright beige for minor size
+  unit_kilo: {foreground: "#C8CC86"}       # Bright yellow-green for KB
+  unit_mega: {foreground: "#C8CC86"}       # Bright yellow-green for MB
+  unit_giga: {foreground: "#8853C7"}       # Accent purple for GB
+  unit_tera: {foreground: "#8853C7"}       # Accent purple for TB
+  unit_huge: {foreground: "#2F88FF"}       # Accent bright blue for PB+
+
+users:
+  user_you: {foreground: "#2F88FF"}        # Accent bright blue for current user
+  user_someone_else: {foreground: "#6DABD6"}    # Normal blue for others
+  group_yours: {foreground: "#8853C7"}     # Accent purple for your group
+  group_not_yours: {foreground: "#553976"} # Normal purple for other groups
+
+links:
+  normal: {foreground: "#2F88FF"}          # Accent bright blue for links
+  multi_link_file: {foreground: "#8853C7"} # Accent purple for multi-linked
+
+git:
+  new: {foreground: "#2F88FF"}             # Accent bright blue for new files
+  modified: {foreground: "#8853C7"}        # Accent purple for modified
+  deleted: {foreground: "#783F59"}         # Normal dark pink for deleted
+  renamed: {foreground: "#C8CC86"}         # Bright yellow-green for renamed
+  typechange: {foreground: "#D9C793"}      # Bright beige for type changes
+  ignored: {foreground: "#302E31"}         # Bright dark gray for ignored
+  conflicted: {foreground: "#A55377"}      # Normal pink for conflicts
+
+git_repo:
+  branch_main: {foreground: "#2F88FF"}     # Accent bright blue for main branch
+  branch_other: {foreground: "#6DABD6"}    # Normal blue for other branches
+  git_clean: {foreground: "#8853C7"}       # Accent purple for clean repo
+  git_dirty: {foreground: "#A55377"}       # Normal pink for dirty repo
+
+file_type:
+  image: {foreground: "#8853C7"}           # Accent purple for images
+  video: {foreground: "#553976"}           # Normal purple for videos
+  music: {foreground: "#6DABD6"}           # Normal blue for audio
+  lossless: {foreground: "#2F88FF"}        # Accent bright blue for lossless audio
+  crypto: {foreground: "#3F6CAD"}          # Normal darker blue for encrypted
+  document: {foreground: "#DCEFFF"}        # Bright lightest blue for documents
+  compressed: {foreground: "#3F6CAD"}      # Normal darker blue for archives
+  temp: {foreground: "#302E31"}            # Bright dark gray for temp files
+  compiled: {foreground: "#416488"}        # Normal slate blue for compiled
+  build: {foreground: "#C8CC86"}           # Bright yellow-green for build files
+  source: {foreground: "#2F88FF"}          # Accent bright blue for source code
+
+punctuation: {foreground: "#302E31"}       # Bright dark gray for punctuation
+date: {foreground: "#6DABD6"}              # Normal blue for dates
+inode: {foreground: "#302E31"}             # Bright dark gray for inodes
+blocks: {foreground: "#553976"}            # Normal purple for blocks
+header: {foreground: "#2F88FF"}            # Accent bright blue for headers
+octal: {foreground: "#C8CC86"}             # Bright yellow-green for octal perms
+flags: {foreground: "#8853C7"}             # Accent purple for flags
+
+control_char: {foreground: "#A55377"}      # Normal pink for control chars
+broken_symlink: {foreground: "#783F59"}    # Normal dark pink for broken links
+broken_path_overlay: {foreground: "#783F59"}  # Normal dark pink overlay
