@@ -1,22 +1,35 @@
 return {
-  'folke/tokyonight.nvim',
-  name = 'tokyonight',
-  config = function()
-    vim.cmd.colorscheme('tokyonight')
-
-    local nvim_api = vim.api.nvim_set_hl
-    -- Transparent backgrounds for main windows
-    nvim_api(0, "Normal", { bg = "none" })
-    nvim_api(0, "NormalFloat", { bg = "none" })
-
-    -- Transparent backgrounds for inactive windows/splits
-    nvim_api(0, "NormalNC", { bg = "none" })
-
-    -- Transparent float borders
-    -- nvim_api(0, "FloatBorder", { bg = "none" })
-
-    -- Transparent line numbers
-    nvim_api(0, "LineNr", { bg = "none" })
-    nvim_api(0, "SignColumn", { bg = "none" })
-  end,
+  {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    lazy = false,
+  },
+  {
+    'Mofiqul/dracula.nvim',
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    'ellisonleao/gruvbox.nvim',
+    priority = 1000,
+    config = function()
+      vim.o.background = 'dark',
+    end,
+  }
 }

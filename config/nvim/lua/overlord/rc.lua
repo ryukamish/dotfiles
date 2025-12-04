@@ -1,15 +1,12 @@
 local map = vim.opt
 
--- Don't change the cursor when going from normal to insert mode
--- vim.opt.guicursor = ""
-
 -- Numbers and relative numbers
 map.nu = true
 map.rnu = true
 
-map.tabstop = 4
-map.softtabstop = 4
-map.shiftwidth = 4
+map.tabstop = 2
+map.softtabstop = 2
+map.shiftwidth = 2
 map.expandtab = true
 map.smartindent = true
 
@@ -30,3 +27,5 @@ map.undofile = true
 -- True colors
 map.termguicolors = true
 
+-------------- Statusline ----------------
+map.winbar = "%= %m %f "    -- Buffer name on the top for all buffers
