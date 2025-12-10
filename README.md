@@ -69,13 +69,18 @@ partition has to be decrypted.
 
 For creating a `swapfile`
 
-```bash btrfs subvolume create /swap btrfs filesystem mkswapfile --size 32g
---uuid clear /swap/swapfile swapon -p 0 /swap/swapfile ```
+```bash 
+btrfs subvolume create /swap 
+btrfs filesystem mkswapfile --size 32g --uuid clear /swap/swapfile 
+swapon -p 0 /swap/swapfile
+```
 
 After making the swapfile it is necessary for the machine to know where is the
 partition. This can be done by adding to `/etc/fstab` file with:
 
-```bash /swap/swapfile none swap defaults,pri=0 0 0 ```
+```bash 
+/swap/swapfile none swap defaults,pri=0 0
+```
 
 Above command is interpreted as first entry is location, second is mountpoint,
 third is what type of partition, fourth is the default mountpoint applied with
