@@ -1,27 +1,44 @@
 #!/usr/bin/env bash
 
-source "$(pwd)/install/helpers/all.sh"
+source "${PWD}/install/helpers/all.sh"
 
-RED="\e[31m" BLUE="\e[34m"
-GREEN="\e[32m" RESET="\e[0m"
+readonly RED="\e[31m"
+readonly BLUE="\e[34m"
+readonly GREEN="\e[32m"
+readonly RESET="\e[0m"
+
+msg() {
+    case "$1" in
+        error)
+            printf '%b\n' "${RED}Error:${RESET} $2"
+            ;;
+        debug)
+            printf '%b\n' "${BLUE}Debug:${RESET} $2"
+            ;;
+        complete)
+            printf '%b\n' "${GREEN}Info:${RESET} $2"
+            ;;
+    esac
+}
 
 # Checking for internet connection
 if ping -c archlinux.org >/dev/null; then
-    printf '%b\n' "${GREEN}Internet connection is available${RESET}"
+    msg complete "Internet connection is available"
 else
-    printf '%b\n' "${RED}Internet connection is not available${RESET}"
+    msg error "Internet connection is not available"
 fi
 
 # Installing packages
 if ! command -v git &>/dev/null; then
-    printf '%b\n' "${RED}Git is not installed.${RESET} ${BLUE}Installing Git...${RESET}"
+    msg error "Git is not installed."
+    msg debug "Installing git..."
     sudo pacman -S --needed --noconfirm git
     if [ $? -ne 0 ]; then
-        printf '%b\n' "${RED}Failed to install Git.${RESET}"
+        msg error "Failed to install git."
         exit 1
     fi
 else
-    printf '%b\n' "${GREEN}Git is installed.${RESET}"
+    msg complete "Git is installed."
 fi
 
 # Installing yay
@@ -123,7 +140,7 @@ Cache=yes
 EOF
     fi
 elif [ "$set_dns" != "y" ]; then
-    printf '%b\n' "${BLUE}Skipping DNS setup for systemd-resolved...${RESET}"
+    msg complete "Skipping DNS setup for systemd-resolved..."
 fi
 
 # Firewall setup with ufw
@@ -143,13 +160,14 @@ fi
 xdg-user-dirs-update
 
 # Stowing config files
-stow -t ~/.config config
-# User scripts
-stow -t ~/.local scripts
-stow -t ~/.local/share/applications applications
-# Initial backgrounds
-stow -t ~/.local/share/backgrounds backgrounds
-# stow -t ~/Pictures/Wallpapers backgrounds
+if command -v stow &>/dev/null; then
+    stow -t ~/.config config
+    stow -t ~/.local scripts
+    stow -t ~/.local/share/applications applications
+    ln -s config/zsh/zshrc ~/.zshrc         # FIX: Add option to check whether to use bash or zsh
+else
+    msg error "Stow is not installed."
+fi
 
 # Systemd units
 if [ -d ~/.config/systemd/user ]; then
@@ -167,3 +185,4 @@ if [ -d "$HOME/.config/bash" ]; then
     done
 fi
 EOF
+
