@@ -33,5 +33,5 @@ map("n", "<leader>h", [[:tabprevious<CR>]]) -- Previous tab
 
 map("n", "<leader>bw", [[:se wrap!<CR>]])   -- Toggle line wrapping
 
-map('t', '<esc><esc>', [[<C-\><C-n>]])   -- Escape neovim terminal with escape key
+map('t', '<esc><esc>', [[<C-\><C-n>]])      -- Escape neovim terminal with escape key
 map('n', '<space>t', '<cmd>terminal<cr>')   -- Terminal inside neovim
