@@ -2,8 +2,8 @@
 
 * {
     border: none;
-    font-family: "JetBrainsMono Nerd Font Propo";
-    font-size: 12px;
+    font-family: "SFMono Nerd Font, sans-serif";
+    font-size: 11px;
     font-weight: bold;
     min-height: 0;
 }
@@ -22,7 +22,7 @@
 }
 
 window#waybar {
-    background-color: @background;
+    background-color: alpha(@background, 0.7);
 }
 
 /* Workspaces */
@@ -80,15 +80,28 @@ window#waybar {
 }
 
 #network.disconnected {
-    color: @color2;
+    color: #FF0000;
 }
 
 /* Groups */
 #audio,
 #expand-tray,
 #hardware,
+#powerofmachine,
 #network {
     margin: 0 0.55rem;
+}
+
+#power-profiles-daemon {
+    margin-right: 0.25rem;
+}
+
+#power-profiles-daemon.power-saver {
+    color: rgba(0, 250, 0, 1);
+}
+
+#power-profiles-daemon.performance {
+    color: rgba(200, 0, 0, 1);
 }
 
 /* Custom modules */
