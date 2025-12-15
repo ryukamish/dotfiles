@@ -72,12 +72,12 @@ fi
 
 # Firewall setup with ufw
 if command -v ufw /dev/null; then
+	sudo systemctl enable --now ufw.service
+	sudo ufw default deny incoming
+	sudo ufw default allow outgoing
 	sudo ufw limit 22/tcp  # SSH
 	sudo ufw allow 80/tcp  # HTTP
 	sudo ufw allow 443/tcp # HTTPS
-	sudo systemctl enable --now ufw.service
-	sudo ufw default deny incoming
-	sudo ufw default deny outgoing
 	# For ProtonVPN
 	sudo ufw allow in on proton0
 	sudo ufw allow out on proton0
