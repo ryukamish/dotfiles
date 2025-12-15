@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "${PWD}/install/helpers/all.sh"
-
 readonly RED="\e[31m"
 readonly BLUE="\e[34m"
 readonly GREEN="\e[32m"
@@ -11,6 +9,7 @@ message() {
 	case "$1" in
 	error)
 		printf '%b\n' "${RED}Error:${RESET} $2"
+		exit 1
 		;;
 	debug)
 		printf '%b\n' "${BLUE}Debug:${RESET} $2"
@@ -22,7 +21,7 @@ message() {
 }
 
 # Checking for internet connection
-if ping -c archlinux.org >/dev/null; then
+if ping -c 3 archlinux.org >/dev/null; then
 	message success "Internet connection is available"
 else
 	message error "Internet connection is not available"
@@ -33,68 +32,42 @@ if ! command -v git &>/dev/null; then
 	message error "Git is not installed."
 	message debug "Installing git..."
 	sudo pacman -S --needed --noconfirm git
-	if [ $? -ne 0 ]; then
+	if [ "$(command -v git)" ]; then
 		message error "Failed to install git."
-		exit 1
 	fi
 else
 	message success "Git is installed."
 fi
 
 # Installing yay
-if command -v yay /dev/null; then
+if command -v yay &>/dev/null; then
 	message success "Yay is installed."
 else
 	message debug "Yay is not installed. Installing Yay..."
 	git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
 	makepkg -si --dir /tmp/yay-bin --noconfirm
 	rm -rf /tmp/yay-bin
-	if [ $? -ne 0 ]; then
-		printf '%b\n' "${RED}Failed to install Yay.${RESET}"
-		exit 1
+	if [ ! "$(command -v yay)" ]; then
+		message error "Failed to install yay..."
 	fi
 fi
 
-# Read packages from packages.txt
-packages=()
-while IFS= read -r line; do
-	[[ -n "$line" ]] && packages+=("$line")
-done <install.packages
-
-# Function to check if package is installed
-is_installed() {
-	if yay -Qi "$1" &>/dev/null; then
-		return 0
-	else
-		return 1
-	fi
-}
-
-# Check and install packages
-to_install=()
-for package in "${packages[@]}"; do
-	# Skip empty lines
-	if [ -z "$package" ]; then
-		continue
-	fi
-
-	if is_installed "$package"; then
-		message debug "✓ $package is already installed"
-	else
-		message debug "✗ $package is not installed"
-		to_install+=("$package")
-	fi
-done
-
-# Install missing packages using yay
-if [ ${#to_install[@]} -gt 0 ]; then
-	echo ""
-	message debug "Installing missing packages: ${to_install[*]}"
-	yay -S --needed --noconfirm "${to_install[@]}"
+# FIX: Reduce the code size for installing packages
+#
+# Install packages from official repo
+if [ -f ./install.packages ]; then
+	sudo pacman -S --needed --noconfirm $(comm -12 <(pacman -Slq | sort) <(sort install.packages)) || message error "Couldn't install packages from pacman..."
 else
-	echo ""
-	echo "✅ All packages are already installed!"
+	message error "Package list file not available..."
 fi
+
+# Install from AUR
+if [ -f ./install.packages ]; then
+	yay -S --needed --noconfirm $(comm -12 <(pacman -Qqem | sort) <(sort install.packages)) || message error "Couldn't install packages from pacman..."
+else
+	message error "Package list file not available..."
+fi
+
 # NOTE: Running command which don't require user intervention
 
 # Firewall setup with ufw
@@ -111,7 +84,7 @@ if command -v ufw /dev/null; then
 fi
 
 # Make default XDG directories
-xdg-user-dirs-update
+command -v xdg-user-dirs-update && xdg-user-dirs-update
 
 # Stowing config files
 if command -v stow &>/dev/null; then
@@ -143,7 +116,6 @@ fi
 read -r -p "Enable suspend to RAM (deep sleep) support? (y/n): " enable_suspend
 if [[ "$enable_suspend" != "y" && "$enable_suspend" != "Y" ]]; then
 	message debug "Skipping suspend to RAM (deep sleep) support setup..."
-	exit 0
 elif [[ "$enable_suspend" == "y" || "$enable_suspend" == "Y" ]]; then
 	printf '%b\n' "${BLUE}Enabling suspend to RAM (deep sleep) support...${RESET}"
 	if [ ! -d /etc/systemd/sleep.conf.d ]; then
@@ -180,7 +152,7 @@ elif [ "$set_dns" != "y" ]; then
 	message success "Skipping DNS setup for systemd-resolved..."
 fi
 
-# Sourcing all files for bash
+# Option for choosing shell
 SHELL_LIST=(
 	"Bash"
 	"Zsh"
@@ -204,3 +176,6 @@ EOF
 		;;
 	esac
 done
+
+# Sourcing it at last so as to not have errors
+source "${PWD}/install/helpers/all.sh"
