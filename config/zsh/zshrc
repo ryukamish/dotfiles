@@ -30,7 +30,7 @@ zstyle ':completion:*' rehash true                # auto-refresh completion if n
 # ─── History settings ───────────────────────────────────────
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.local/share/zsh/history
+[ -d ~/.local/share/zsh ] || mkdir -p ~/.local/share/zsh && HISTFILE=~/.local/share/zsh/history
 setopt SHARE_HISTORY          # share history between sessions
 setopt HIST_IGNORE_DUPS       # don't save duplicates
 setopt HIST_IGNORE_SPACE      # ignore commands starting with space
