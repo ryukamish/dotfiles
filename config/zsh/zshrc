@@ -27,10 +27,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # case insensitive
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # colored completion
 zstyle ':completion:*' rehash true                # auto-refresh completion if new programs installed
 
-# ─── Starship prompt (beautiful & fast) ──────────────────────
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh --cmd cd)"
-
 # ─── History settings ───────────────────────────────────────
 HISTSIZE=10000
 SAVEHIST=10000
@@ -65,3 +61,27 @@ alias nv='nvim'
 if command -v rustormy > /dev/null; then
     alias weather='rustormy -c Ranchi --colors'
 fi
+
+# ----------- Keybind -----------------------
+bindkey -s ^f "tmux-sessionizer\n"
+
+# ----------- Git -----------------------
+
+# Load version control info
+autoload -Uz vcs_info
+
+# Load colors
+autoload -Uz colors && colors
+
+# Run vcs_info before each prompt
+precmd_functions+=(vcs_info)
+
+# Enable prompt substitution
+setopt prompt_subst
+
+# Configure the format for git
+zstyle ':vcs_info:git:*' formats ' (%b)'
+zstyle ':vcs_info:git:*' enable git
+
+# Set the PROMPT variable to include the vcs_info_msg_0_ variable
+PROMPT='%F{#bb9af7}%~%f%F{#7dcfff}${vcs_info_msg_0_}%f %# '
