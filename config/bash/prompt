@@ -1,10 +1,14 @@
-readonly BLUE='\e[34m'
-readonly GREEN='\e[32m'
-readonly RESET='\e[0m'
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
-deps=('starship' 'zoxide')
-if command -v "${deps[@]}" >/dev/null 2>&1; then
-    eval "$(starship init bash)"
-else
-    PS1="${BLUE}\u@\h ${GREEN}\w${RESET}\n\$ "
-fi
+# ANSI color codes
+readonly BLUE="\[\033[0;34m\]"
+readonly PURPLE="\[\033[0;35m\]"
+readonly RESET="\[\033[0m\]"
+
+# Function to get Git branch name
+parse_git_branch() {
+  git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+}
+
+# Simple bash prompt with relative path & git status
+PS1="${BLUE}\w${PURPLE} \$(parse_git_branch)${RESET}\$ "
