@@ -13,10 +13,10 @@
 	"modules-center": [],
 	"modules-right": [
 		"group/expand-tray",
-		"custom/pomodoro",
+		// "custom/pomodoro",
 		"group/hardware",
 		"group/audio",
-		"group/powerofmachine",
+		// "group/powerofmachine",
 		"clock"
 	],
 	"hyprland/workspaces": {
@@ -34,13 +34,13 @@
 			"9": "9",
 			"10": "10"
 		},
-		"persistent-workspaces": {
-			"1": [],
-			"2": [],
-			"3": [],
-			"4": [],
-			"5": []
-		}
+		// "persistent-workspaces": {
+		// 	"1": [],
+		// 	"2": [],
+		// 	"3": [],
+		// 	"4": [],
+		// 	"5": []
+		// }
 	},
 	// module groups
 	"group/hardware": {
@@ -117,7 +117,7 @@
 		"format": " {temperatureC}°C"
 	},
 	"network": {
-		"interface": "wlo1",
+		"interface": "wlan0",
 		"family": "ipv4",
 		"format": "{ifname}",
 		"format-wifi": "{icon} {essid}",
