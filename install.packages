@@ -6,10 +6,8 @@ bat
 bluetui
 bluez
 bluez-utils
-brave-bin
 brightnessctl
 btop
-btrfs-progs
 cliphist
 efibootmgr
 exfatprogs
@@ -21,13 +19,11 @@ git
 gnome-themes-extra
 gpu-screen-recorder
 grim
-grub-btrfs
 gst-plugin-pipewire
 gst-plugins-bad
 gst-plugins-good
 gst-plugins-ugly
 gum
-helium-browser-bin
 hypridle
 hyprland
 hyprlock
@@ -47,7 +43,6 @@ libva-intel-driver
 linux-firmware
 linux-headers
 localsend-bin
-lua-language-server
 ly
 mako
 man-db
@@ -92,8 +87,6 @@ tree
 ttf-jetbrains-mono-nerd
 udisks2-btrfs
 ufw
-vscode-css-languageserver
-vscode-json-languageserver
 vulkan-intel
 vulkan-nouveau
 vulkan-radeon
@@ -113,9 +106,5 @@ yt-dlp
 zathura
 zathura-pdf-mupdf
 zen-browser-bin
-zoxide
 zram-generator
 zsh
-zsh-autosuggestions
-zsh-completions
-zsh-syntax-highlighting

@@ -177,5 +177,8 @@ EOF
 	esac
 done
 
+# Dark theme for all GUI applications
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
 # Sourcing it at last so as to not have errors
 source "${PWD}/install/helpers/all.sh"
