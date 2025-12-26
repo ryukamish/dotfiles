@@ -23,7 +23,7 @@ chosen=$(find "$WALLDIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname 
          -show-icons \
          -theme-str 'window { width: 90%; height: 80%; }' \
          -theme-str 'listview { columns: 5; lines: 3; spacing: 20px; }' \
-         -theme-str 'element-icon { size: 210px; horizontal-align: 0.5; }' \
+         -theme-str 'element-icon { size: 200px; horizontal-align: 0.5; }' \
          -theme-str 'element-text { enabled: false; }')
 
 [ -z "$chosen" ] && exit
