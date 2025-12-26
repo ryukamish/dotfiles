@@ -19,8 +19,6 @@ alias si='sudo pacman -S'
 alias y='yay -Ss'
 alias yi='yay -S'
 
-alias she='sesh connect $(sesh list | fzf)'
-
 if command -v rustormy >/dev/null; then
   alias weather='rustormy -c Ranchi --colors'
 fi
