@@ -26,7 +26,7 @@ source "${PWD}/install/packages.sh"
 # NOTE: Running command which don't require user intervention
 
 # Firewall setup with ufw
-if command -v ufw /dev/null; then
+if command -v ufw >/dev/null; then
 	sudo systemctl enable --now ufw.service
 	sudo ufw default deny incoming
 	sudo ufw default allow outgoing
@@ -126,7 +126,7 @@ EOF
 		break
 		;;
 	"Zsh")
-		ln -s cofig/zsh/zshrc ~/.config/zsh/.zshrc
+		ln -s config/zsh/zshrc ~/.config/zsh/.zshrc
 		ln -s config/zsh/zshrc ~/.zshrc
 		break
 		;;
