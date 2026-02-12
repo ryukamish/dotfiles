@@ -118,7 +118,7 @@ ufw default deny incoming
 ufw default allow outgoing
 # For ProtonVPN
 ufw allow in on proton0
-ufw allow out in proton0
+ufw allow out on proton0
 ```
 
 #### Network
