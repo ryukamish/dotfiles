@@ -38,10 +38,7 @@ aur_packages=(
 	bluetui
 	wifitui-bin
 	zen-browser-bin
-	ticktick
-	telegram-desktop
 	localsend-bin
-	kew
 	)
 
 msg(){
