@@ -53,12 +53,15 @@ msg(){
 	error)
 		printf '%b\n' "${RED}Error:${RESET} $2"
 		exit 1
+		sleep 0.2
 		;;
 	debug)
 		printf '%b\n' "${BLUE}Debug:${RESET} $2"
+		sleep 0.2
 		;;
 	success)
 		printf '%b\n' "${GREEN}Info:${RESET} $2"
+		sleep 0.2
 		;;
 	esac
 }
@@ -126,12 +129,8 @@ install_aur_packages(){
 }
 
 msg debug "Checking for dependencies..."
-check_deps
-msg success "Dependencies are installed."
+check_deps && msg success "Dependencies are installed." || msg error "Dependencies can't be installed.."
 msg debug "Installing packages..."
-install_core_packages
-msg success "Core packages are installed."
+install_core_packages && msg success "Core packages are installed." || msg error "Couldn't install core packages..."
 msg debug "Installing AUR packages..."
-install_aur_packages
-msg success "AUR packages are installed."
-true
+install_aur_packages && msg success "AUR packages are installed." || msg error "Couldn't install AUR packages..."
