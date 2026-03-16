@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-readonly RED="\e[31m"
-readonly BLUE="\e[34m"
-readonly GREEN="\e[32m"
-readonly RESET="\e[0m"
+RED="\e[31m"
+BLUE="\e[34m"
+GREEN="\e[32m"
+RESET="\e[0m"
 
 message() {
 	case "$1" in
