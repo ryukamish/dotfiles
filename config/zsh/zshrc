@@ -63,7 +63,7 @@ if command -v rustormy > /dev/null; then
 fi
 
 # ----------- Keybind -----------------------
-bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^f "~/.local/bin/tmux-sessionizer\n"
 
 # ----------- Git -----------------------
 

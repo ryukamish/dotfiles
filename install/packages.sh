@@ -96,6 +96,7 @@ check_deps(){
 	else
 		msg debug "Installing yay..."
 		git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
+		sudo pacman -S base-devel git --noconfirm
 		makepkg -si --dir /tmp/yay-bin --noconfirm
 		rm -rf /tmp/yay-bin
 		if [ $? -ne 0 ]; then
