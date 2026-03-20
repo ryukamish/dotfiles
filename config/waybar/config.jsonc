@@ -5,15 +5,17 @@
 	"position": "top",
 	"modules-left": [
 		"hyprland/workspaces",
-		"custom/uptime",
-		"backlight",
-		"group/network",
+		// "custom/uptime",
+		// "backlight",
+		// "group/network",
 		"custom/screenrecording-indicator"
 	],
 	"modules-center": [],
 	"modules-right": [
 		"group/expand-tray",
-		"group/hardware",
+    "backlight",
+    "group/network",
+		// "group/hardware",
 		"group/audio",
 		"group/powerofmachine",
 		"clock"
