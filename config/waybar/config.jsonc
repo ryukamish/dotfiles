@@ -14,6 +14,7 @@
 	"modules-right": [
 		"group/expand-tray",
     "backlight",
+    "custom/brightness",
     "group/network",
 		// "group/hardware",
 		"group/audio",
@@ -62,7 +63,7 @@
 	"group/powerofmachine": {
 		"orientation": "horizontal",
 		"modules": [
-			"power-profiles-daemon",
+			// "power-profiles-daemon",
 			"battery"
 		]
 	},
@@ -240,5 +241,15 @@
 		"tooltip": false,
 		"interval": 1600,
 		"exec": "~/.config/waybar/scripts/uptime.sh"
-	}
+	},
+  "custom/brightness": {
+    "format": "☀ {}%",
+    "interval": "once",
+    "signal": 9,
+    "exec": "~/.config/waybar/scripts/brightness.sh get",
+    "on-scroll-up": "~/.config/waybar/scripts/brightness.sh up",
+    "on-scroll-down": "~/.config/waybar/scripts/brightness.sh down",
+    "on-click": "~/.config/waybar/scripts/brightness.sh left_click",
+    "on-click-right": "~/.config/waybar/scripts/brightness.sh right_click",
+  },
 }

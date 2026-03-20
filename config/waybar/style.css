@@ -2,7 +2,8 @@
 
 * {
 	border: none;
-	font-family: "JetBrainsMono Nerd Font Propo, sans-serif";
+	/* font-family: "JetBrainsMono Nerd Font Propo, sans-serif"; */
+  font-family: "SF Mono";
 	font-size: 12px;
 	font-weight: bold;
 	min-height: 0;
@@ -93,11 +94,14 @@ window#waybar {
 
 /* Groups */
 #audio,
-#expand-tray,
 #hardware,
 #powerofmachine,
 #network {
 	margin: 0 0.55rem;
+}
+
+#expand-tray {
+    margin-right: 1em;
 }
 
 #power-profiles-daemon.power-saver {
@@ -123,5 +127,9 @@ window#waybar {
 }
 
 #custom-pomodoro {
+	margin: 0 0.55rem;
+}
+
+#custom-brightness {
 	margin: 0 0.55rem;
 }
