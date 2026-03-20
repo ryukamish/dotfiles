@@ -10,13 +10,13 @@ case "$menu_args" in
         install_args=$(printf '%b' '󰣇 Pacman\n󰣇 AUR\n TUI' | rofi -dmenu -p "󰛀 Install: " -i -theme-str "window {width: 20em;}")
         case "$install_args" in
             *Pacman)
-                terminal-floating pkg-install
+                ~/.local/bin/terminal-floating pkg-install
                 ;;
             *AUR)
-                terminal-floating pkg-aur-install
+                ~/.local/bin/terminal-floating pkg-aur-install
                 ;;
             *TUI)
-                terminal-floating tui-install
+                ~/.local/bin/terminal-floating tui-install
                 ;;
         esac
         ;;
@@ -24,10 +24,10 @@ case "$menu_args" in
         remove_args=$(printf '%b' '󰣇 Packages\n TUI' | rofi -dmenu -p " Remove: " -i)
         case "$remove_args" in
             *Packages)
-                terminal-floating pkg-remove
+                ~/.local/bin/terminal-floating pkg-remove
                 ;;
             *TUI)
-                terminal-floating tui-remove
+                ~/.local/bin/terminal-floating tui-remove
                 ;;
         esac
         ;;
@@ -38,31 +38,31 @@ case "$menu_args" in
         theme_args=$(printf '%b' '󰸉 Change Wallpaper\n Colorscheme' | rofi -dmenu -p '' -i)
         case "$theme_args" in
             *Change\ Wallpaper)
-                hyprwall
+                ~/.local/bin/hyprwall
                 ;;
             *Colorscheme)
                 theme_args=$(printf '%b' 'Black Lotus\nCatppuccin Mocha\nDracula\nGruvbox Dark\nKanagawa\nRose Pine\nTokyonight' | rofi -dmenu -p 'Colorscheme: ' -i)
                 case "$theme_args" in
                     *Black\ Lotus)
-                        rofi-theme-switcher blacklotus
+                        ~/.local/bin/rofi-theme-switcher blacklotus
                         ;;
                     *Catppuccin\ Mocha)
-                        rofi-theme-switcher catppuccin-mocha
+                        ~/.local/bin/rofi-theme-switcher catppuccin-mocha
                         ;;
                     *Dracula)
-                        rofi-theme-switcher dracula
+                        ~/.local/bin/rofi-theme-switcher dracula
                         ;;
                     *Gruvbox\ Dark)
-                        rofi-theme-switcher gruvbox-dark
+                        ~/.local/bin/rofi-theme-switcher gruvbox-dark
                         ;;
                     *Kanagawa)
-                        rofi-theme-switcher kanagawa
+                        ~/.local/bin/rofi-theme-switcher kanagawa
                         ;;
                     *Rose\ Pine)
-                        rofi-theme-switcher rose-pine
+                        ~/.local/bin/rofi-theme-switcher rose-pine
                         ;;
                     *Tokyonight)
-                        rofi-theme-switcher tokyonight
+                        ~/.local/bin/rofi-theme-switcher tokyonight
                         ;;
                 esac
                 ;;
@@ -72,19 +72,19 @@ case "$menu_args" in
         record_args=$(printf '%b' '󰍹 Display\n󰽟 Display + Audio\n󰖠 Webcam + Audio\n󰹑 Region\n󱄄 Region + Audio' | rofi -dmenu -p " Record: " -i -theme-str "window {width: 20em;}")
         case "$record_args" in
             *Display)
-                screenrecord output
+                ~/.local/bin/screenrecord output
                 ;;
             *Display\ +\ Audio)
-                screenrecord output --with-audio
+                ~/.local/bin/screenrecord output --with-audio
                 ;;
             *Webcam\ +\ Audio)
-                screenrecord output --with-webcam --with-audio
+                ~/.local/bin/screenrecord output --with-webcam --with-audio
                 ;;
             *Region)
-                screenrecord region
+                ~/.local/bin/screenrecord region
                 ;;
             *Region\ +\ Audio)
-                screenrecord region --with-audio
+                ~/.local/bin/screenrecord region --with-audio
                 ;;
         esac
         ;;
@@ -92,14 +92,14 @@ case "$menu_args" in
         devices_args=$(printf '%b' 'Mount\nUnmount' | rofi -dmenu -p "󰕓 Choose: " -i)
         case "$devices_args" in
             Mount)
-                terminal-floating mount-devices Mount
+                ~/.local/bin/terminal-floating mount-devices Mount
                 ;;
             Unmount)
-                terminal-floating mount-devices Unmount
+                ~/.local/bin/terminal-floating mount-devices Unmount
                 ;;
         esac
         ;;
     *Update)
-        terminal-floating pkg-update
+        ~/.local/bin/terminal-floating pkg-update
         ;;
 esac
