@@ -2,14 +2,15 @@
 # If you use ~/.config/zsh for everything (cleaner)
 export ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Path to your oh-my-zsh-like plugins (we're not using full OMZ, just the plugins)
 ZSH_CUSTOM="$ZDOTDIR/plugins"
 
 # ─── Plugins ─────────────────────────────────────────────────
 plugins=(
-  zsh-autosuggestions      # fish-like autosuggestions (gray text)
-  zsh-syntax-highlighting  # colors commands that are valid/invalid
+  # zsh-autosuggestions      # fish-like autosuggestions (gray text)
+  # zsh-syntax-highlighting  # colors commands that are valid/invalid
 )
 
 # Load plugins
