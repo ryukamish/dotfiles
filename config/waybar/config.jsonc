@@ -110,8 +110,8 @@
       "album"
     ],
       "dynamic":  true,
-      "format": "{player_icon} {status_icon} {artist} {album} {title}",
-      "format-paused": "{player_icon} {status_icon} {artist} {album} {title}",
+      "format": "{status_icon} {artist} - {title}",
+      "format-paused": "{status_icon} {artist} - {title}",
     "player-icons": {
       "default": "▶",
       "mpv": "🎵"
@@ -248,7 +248,7 @@
 		"tooltip": false
 	},
 	"custom/screenrecording-indicator": {
-		"on-click": "screenrecord",
+		"on-click": "~/.local/bin/screenrecord",
 		"exec": "~/.local/bin/waybar-screenrecord",
 		"signal": 8,
 		"return-type": "json"
