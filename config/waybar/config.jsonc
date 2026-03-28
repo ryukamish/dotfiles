@@ -117,7 +117,8 @@
       "mpv": "🎵"
     },
     "status-icons": {
-      "paused": "⏸"
+      "paused": "⏸",
+      "default": "▶",
     },
 	// "ignored-players": ["firefox"]
   },
