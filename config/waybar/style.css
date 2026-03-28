@@ -32,6 +32,13 @@ window#waybar {
 /* Workspaces */
 #workspaces {
 	margin-right: 0.75rem;
+  padding: 0 8px;
+  min-width: 30px;
+  margin: 2px;
+}
+
+#workspaces button {
+  margin: 0 5px 0 5px;
 }
 
 #workspaces button.active {
@@ -55,7 +62,6 @@ window#waybar {
 #workspaces button.urgent {
 	color: #ffffff;
 	background-color: rgba(255, 0, 0, 0.5);
-	border-radius: 0;
 }
 
 /* Modules */
