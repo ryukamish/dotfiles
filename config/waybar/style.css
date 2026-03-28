@@ -44,19 +44,6 @@ window#waybar {
   background-color: @color1;
 }
 
-/* #workspaces button.empty.active { */
-/* 	color: @color2; */
-	/* opacity: 1; */
-/* } */
-
-/* #workspaces button.empty { */
-/* 	opacity: 0.2; */
-/* } */
-
-/* #workspaces button:not(.empty) { */
-/*     opacity: 0.7; */
-/* } */
-
 #workspaces button.urgent {
 	color: #ffffff;
 	background-color: rgba(255, 0, 0, 0.5);
@@ -73,6 +60,7 @@ window#waybar {
 #cpu,
 #temperature,
 #memory,
+#mpris,
 #pulseaudio {
 	margin: 0 0.45rem;
 }

@@ -8,6 +8,7 @@
 		// "custom/uptime",
 		// "backlight",
 		// "group/network",
+    "mpris",
 		"custom/screenrecording-indicator"
 	],
 	"modules-center": [],
@@ -102,6 +103,24 @@
 		"critical-threshold": 80,
 		"format": " {temperatureC}°C"
 	},
+  "mpris": {
+    "dynamic-priority": [
+      "title",
+      "artist",
+      "album"
+    ],
+      "dynamic":  true,
+      "format": "{player_icon} {status_icon} {artist} {album} {title}",
+      "format-paused": "{player_icon} {status_icon} {artist} {album} {title}",
+    "player-icons": {
+      "default": "▶",
+      "mpv": "🎵"
+    },
+    "status-icons": {
+      "paused": "⏸"
+    },
+	// "ignored-players": ["firefox"]
+  },
 	"network": {
 		"interface": "wlan0",
 		"family": "ipv4",
@@ -245,6 +264,7 @@
 	},
   "custom/brightness": {
     "format": "☀ {}%",
+    "tooltip-format": "EXT: ☀ {}%",
     "interval": "once",
     "signal": 9,
     "exec": "~/.config/waybar/scripts/brightness.sh get",
