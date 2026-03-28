@@ -107,6 +107,7 @@ window#waybar {
 
 /* Custom modules */
 #custom-screenrecording-indicator {
+  margin: 0 1em;
 	color: #ff0000;
 	animation-name: urgent-blink;
 	animation-duration: 1s;
