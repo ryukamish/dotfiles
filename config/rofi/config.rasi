@@ -13,7 +13,7 @@ window {
 }
 
 configuration {
-    modi: "drun,run,recursivebrowser,emoji";
+    modi: "drun,run,recursivebrowser";
     show-icons: true;
     display-drun: " ";
     case-sensitive: false;
