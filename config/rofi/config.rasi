@@ -1,7 +1,7 @@
 @import 'colors.rasi'
 
 * {
-    font: 'JetBrainsMono Nerd Font 12';
+    font: 'JetBrainsMono Nerd Font Propo 12';
 }
 
 window {
@@ -15,7 +15,7 @@ window {
 configuration {
     modi: "drun,run,recursivebrowser";
     show-icons: true;
-    display-drun: " ";
+    display-drun: "";
     case-sensitive: false;
 }
 
