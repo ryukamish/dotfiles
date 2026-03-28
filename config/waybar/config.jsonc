@@ -120,7 +120,7 @@
 		"tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
 		"tooltip-format-disconnected": "Disconnected",
 		"interval": 5,
-		"on-click": "$TERMINAL --class=Wifitui -e wifitui",
+		"on-click": "$TERMINAL --class Wifitui -e wifitui",
 		"on-click-right": "rfkill toggle wlan"
 	},
 	"backlight": {
@@ -229,7 +229,7 @@
 	},
 	"custom/screenrecording-indicator": {
 		"on-click": "screenrecord",
-		"exec": "waybar-screenrecord",
+		"exec": "~/.local/bin/waybar-screenrecord",
 		"signal": 8,
 		"return-type": "json"
 	},
