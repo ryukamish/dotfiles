@@ -26,18 +26,18 @@
 		"on-click": "activate",
 		"format": "{icon}",
 		"format-icons": {
-			"1": "1",
-			"2": "2",
-			"3": "3",
-			"4": "4",
-			"5": "5",
-			"6": "6",
-			"7": "7",
-			"8": "8",
-			"9": "9",
-			"10": "10",
-      "active": "●",
-		}
+			"1": "1 ",
+			"2": "2 ",
+			"3": "3 ",
+			"4": "4 ",
+			"5": "5 פּ",
+			"6": "6 ",
+			"7": "7 ",
+			"8": "8 ",
+			"9": "9 ",
+			"10": "10 ",
+		},
+		"all-outputs": true,
 	},
 	// module groups
 	"group/hardware": {
@@ -104,14 +104,9 @@
 		"format": " {temperatureC}°C"
 	},
   "mpris": {
-    "dynamic-priority": [
-      "title",
-      "artist",
-      "album"
-    ],
-      "dynamic":  true,
-      "format": "{status_icon} {artist} - {title}",
-      "format-paused": "{status_icon} {artist} - {title}",
+    "max-length": 50,
+    "format": "{status_icon} {artist} - {title}",
+    "format-paused": "{status_icon} {artist} - {title}",
     "player-icons": {
       "default": "▶",
       "mpv": "🎵"
@@ -120,7 +115,7 @@
       "paused": "⏸",
       "default": "▶",
     },
-	// "ignored-players": ["firefox"]
+	"ignored-players": ["zen"]
   },
 	"network": {
 		"interface": "wlan0",
