@@ -46,6 +46,10 @@ window#waybar {
   border-radius: 0;
 }
 
+#workspaces button:not(.empty) {
+  color: @color1;
+}
+
 #workspaces button.urgent {
 	color: #ffffff;
 	background-color: rgba(255, 0, 0, 0.5);
@@ -77,10 +81,22 @@ window#waybar {
 
 #battery:not(.charging).warning {
 	color: #FFA500;
+  background-color: transparent;
+}
+
+#battery.charging.warning {
+	color: #FFA500;
+  background-color: transparent;
 }
 
 #battery:not(.charging).critical {
 	color: #FF0000;
+  background-color: transparent;
+}
+
+#battery.charging.critical {
+	color: #FF0000;
+  background-color: transparent;
 }
 
 #network.disconnected {
