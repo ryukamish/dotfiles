@@ -92,10 +92,10 @@ case "$menu_args" in
   devices_args=$(printf '%b' 'Mount\nUnmount' | rofi -dmenu -p "󰕓 Choose: " -i)
   case "$devices_args" in
   Mount)
-    ~/.local/bin/terminal-floating mount-devices Mount
+    ~/.local/bin/terminal-floating ~/.local/bin/mount-devices Mount
     ;;
   Unmount)
-    ~/.local/bin/terminal-floating mount-devices Unmount
+    ~/.local/bin/terminal-floating ~/.local/bin/mount-devices Unmount
     ;;
   esac
   ;;
