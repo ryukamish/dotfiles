@@ -4,7 +4,7 @@ set -eou pipefail
 
 msg() {
     case "$1" in
-        "error") gum log --structured --level error "$2" | exit 1 ;;
+        "error") gum log --structured --level error "$2"; exit 1 ;;
         "info") gum log --structured --level info "$2" ;;
         "success") gum log --structured --level success "$2" ;;
         "complete") gum spin --spinner "globe" --title "Done! Press any key to close..." -- bash -c 'read -n 1 -s' ;;
@@ -13,7 +13,7 @@ msg() {
 
 Url=$(gum input --header.bold --header.foreground="#FCB8EF" --header="URL of video:" --placeholder="Enter URL..." || msg error "Please enter a url.")
 VideoDownloadMode=$(gum choose --header="How many files to download:" --header.bold --header.foreground="#FCB8EF" "Single" "Batch" || msg error "Please choose a video download mode.")
-DownloadDirectory=$(find "$HOME" -type d -not -path "$HOME/.*" -not -path "$HOME/.cache" | fzf --layout=reverse --height=50% --border || msg error "Did not select a download directory.")
+DownloadDirectory=$(find "$HOME/Videos" -type d | fzf --layout=reverse --height=50% --border || msg error "Did not select a download directory.")
 
 if [ -n "$Url" ]; then
     case "$VideoDownloadMode" in
@@ -75,7 +75,4 @@ if [ -n "$Url" ]; then
             ;;
         Batch) ;;
     esac
-else
-    msg error "Enter a URL..."
-    msg complete
 fi
