@@ -42,10 +42,14 @@ bindkey '^ ' autosuggest-accept     # Ctrl+Space also accepts
 bindkey '^[[A' history-beginning-search-backward  # Up arrow: search history
 bindkey '^[[B' history-beginning-search-forward   # Down arrow: search history
 
+# Common bindings for Alt + Arrow (Meta + Arrow)
+bindkey '^[[1;3C' forward-word      # Alt + Right
+bindkey '^[[1;3D' backward-word     # Alt + Left
+
 # ─── Useful aliases ─────────────────────────────
-alias ls='eza -l --group-directories-first --icons --git'
-alias ll='eza -lh --group-directories-first --icons --git'
-alias la='eza -lah --group-directories-first --icons --git'
+alias ls='ls --color=auto --group-directories-first'
+alias ll='ls -lh --color=auto --group-directories-first'
+alias la='ls -lah --color=auto --group-directories-first'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias ..='cd ..'
