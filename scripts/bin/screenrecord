@@ -26,7 +26,7 @@ start_webcam_overlay() {
     cleanup_webcam
 
     # Get monitor scale
-    local scale=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .scale')
+    # local scale=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .scale')
 
     # Target width (base 360px, scaled to monitor)
     local target_width=$(awk "BEGIN {printf \"%.0f\", 360 * $scale}")
@@ -119,7 +119,7 @@ elif [[ "$SCOPE" == "output" ]]; then
 else
     [[ "$WEBCAM" == "true" ]] && start_webcam_overlay
 
-    scale=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .scale')
+    # scale=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .scale')
 
     if ! region=$(slurp -f "%wx%h+%x+%y"); then
         [[ "$WEBCAM" == "true" ]] && cleanup_webcam
