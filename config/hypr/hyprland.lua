@@ -1,0 +1,8 @@
+require("tiling.autostart")
+require("tiling.monitors")
+require("tiling.envs")
+require("tiling.permissions")
+require("tiling.looknfeel")
+require("tiling.input")
+require("tiling.binds")
+require("tiling.windows")
