@@ -3,26 +3,32 @@
 power_args=$(printf '%b' ' Lock\nLogout\n Restart\n󰒲 Suspend\n󰋊 Hibernate\n󰚦 Shutdown' |
   rofi -dmenu -p "󰐥 " -i -theme-str 'window {width: 12em; padding: 2px; height: 16em;}')
 
+_have(){
+	command -v "$1" || notify-send "ERROR" "$1 is not installed."
+}
+
 case "$power_args" in
 *Lock)
   if [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
-    command -v swaylock &>/dev/null && swaylock
+	  _have swaylock && swaylock
   elif [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
-    hyprlock
+    _have hyprlock && hyprlock
   fi
   ;;
 *Logout)
   if [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
-    niri msg action quit
+    _have niri && niri msg action quit
   elif [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
-    hyprctl dispatch exit
+    _have hyprctl && hyprctl dispatch exit
   fi
   ;;
 *Restart)
   systemctl reboot
   ;;
 *Suspend)
-  systemctl suspend
+	if _have swaylock; then
+		swaylock -f && systemctl suspend
+	fi
   ;;
 *Hibernate)
   systemctl hibernate
