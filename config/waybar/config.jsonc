@@ -8,19 +8,21 @@
 		// "custom/uptime",
 		// "backlight",
 		// "group/network",
-		"mpris",
-		"custom/screenrecording-indicator"
-	],
-	"modules-center": [],
-	"modules-right": [
-		"group/expand-tray",
 		"backlight",
 		"custom/brightness",
-		"group/network",
-		// "group/hardware",
-		"group/audio",
-		"group/powerofmachine",
+		"group/network"
+	],
+	"modules-center": [
+		"custom/screenrecording-indicator",
 		"clock"
+		// "mpris"
+	],
+	"modules-right": [
+		"group/expand-tray",
+		// "group/hardware",
+		"bluetooth",
+		"pulseaudio",
+		"group/powerofmachine"
 	],
 	"hyprland/workspaces": {
 		"on-click": "activate",
@@ -30,15 +32,7 @@
 			"2": "2",
 			"3": "3",
 			"4": "4",
-			"5": "5",
-			"6": "6",
-			"7": "7",
-			"8": "8",
-			"9": "9",
-			"10": "10"
-		},
-		"persistent-workspaces": {
-			"*": 10
+			"5": "5"
 		}
 	},
 	// module groups
@@ -48,13 +42,6 @@
 			"cpu",
 			"memory",
 			"temperature"
-		]
-	},
-	"group/audio": {
-		"orientation": "horizontal",
-		"modules": [
-			"bluetooth",
-			"pulseaudio"
 		]
 	},
 	"group/network": {
@@ -67,7 +54,7 @@
 	"group/powerofmachine": {
 		"orientation": "horizontal",
 		"modules": [
-			// "power-profiles-daemon",
+			"power-profiles-daemon",
 			"battery"
 		]
 	},
@@ -263,7 +250,7 @@
 		"exec": "~/.config/waybar/scripts/uptime.sh"
 	},
 	"custom/brightness": {
-		"format": "☀ {}%",
+		"format": "EXT: ☀ {}%",
 		"tooltip-format": "EXT: ☀ {}%",
 		"interval": "once",
 		"signal": 9,
